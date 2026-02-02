@@ -130,14 +130,3 @@ MEDIA_URL = '/media/'
 ######## SESSION COOKIE
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
-if os.environ.get("RENDER", "") == "true":
-    from django.contrib.auth import get_user_model
-
-    User = get_user_model()
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser(
-            username="admin",
-            email="admin@example.com",
-            password="admin12345"
-        )

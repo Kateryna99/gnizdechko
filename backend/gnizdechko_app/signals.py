@@ -1,9 +1,11 @@
 # gnizdechko_app/signals.py
+import os
+from django.db.models.signals import post_migrate
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 
 from .models import Product, ProductImage
-
 
 def _safe_delete_file(field_file):
     try:
@@ -51,3 +53,18 @@ def delete_old_extra_image_on_change(sender, instance, **kwargs):
 
     if old.image and old.image.name and old.image != instance.image:
         _safe_delete_file(old.image)
+
+
+@receiver(post_migrate)
+def create_demo_superuser(sender, **kwargs):
+    # тільки на Render (або зроби свою умову)
+    if os.environ.get("RENDER") != "true":
+        return
+
+    User = get_user_model()
+    username = os.environ.get("DEMO_ADMIN_USER", "admin")
+    password = os.environ.get("DEMO_ADMIN_PASSWORD", "admin12345")
+    email = os.environ.get("DEMO_ADMIN_EMAIL", "admin@example.com")
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username=username, email=email, password=password)
