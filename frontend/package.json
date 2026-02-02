@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "scss:dev": "sass src/scss/main.scss ../backend/static/css/main.css --watch",
+    "scss:build": "sass src/scss/main.scss ../backend/static/css/main.css --style=compressed",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "swiper": "^12.0.3"
+  }
+}

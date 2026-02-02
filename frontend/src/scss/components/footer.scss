@@ -1,0 +1,128 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.footer {
+  border-top: 2px dotted $colorAccent;
+
+  &__wrapper {
+    padding: 2rem 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @include onLaptopAndUp {
+      padding: 4rem 0 3rem;
+    }
+  }
+
+  &__top {
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr);
+    gap: 2rem;
+
+    @include onTabletAndUp {
+      gap: 3rem;
+    }
+
+    @include onLaptopAndUp {
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+      justify-items: start;
+      align-items: center;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @include onTabletAndUp {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+    }
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+
+    &--flex {
+      @include onLaptopAndUp {
+        margin-top: -1rem;
+
+        gap: 2rem;
+      }
+    }
+  }
+
+  &__icon {
+    font-size: $text-36;
+  }
+
+  &__title {
+    @include titleSmall;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  &__item {
+    position: relative;
+    @include before {
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+
+      display: block;
+
+      width: 0;
+      height: 1px;
+
+      background-color: $colorTextPrimary;
+
+      transition: width 0.3s;
+    }
+
+    @include hover-supported {
+      @include onHover {
+        &::before {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &__link {
+    font-weight: $fontWeightSemiBold;
+    font-size: $text-20;
+  }
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+
+  @include hover-supported {
+    @include onHover {
+      cursor: pointer;
+    }
+  }
+}
+
+.footer_bottom {
+  border-top: 1px solid $colorAccent;
+  padding: 2rem 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,86 @@
+{%if cart_items%}
+<div class="cart__wrapper">
+    <div class="cart__flex">
+        {%for product in cart_items%}
+        <div class="cart-product">
+            <a href="{% url 'product-detail' product.product_id %}" class="cart-product__link">
+                <div class="cart-product__image">
+                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                </div>
+
+                <div class="cart-product__block">
+                    <h4 class="cart-product__title">{{ product.title }}</h4>
+
+                    {%if product.color_id%}
+                    <div class="cart-product__colors">
+                        <h5 class="cart-product__title">Колір:</h5>
+
+                        <span
+                                class="cart-product__color"
+                                style="background-color: {{ product.color_hex }};"
+                                aria-label="{{ product.color_name }}"
+                                title="{{ product.color_name }}"
+                        ></span>
+                    </div>
+                    {%endif%}
+
+                    <div
+                            class="amount-container amount-container--cart"
+                            data-cart-key="{{ product.key }}"
+                    >
+                        <button
+                                type="button"
+                                class="amount-container__button amount-container__button--cart"
+                                data-action="decrease">
+                            <span>-</span>
+                        </button>
+                        <p class="amount-container__value amount-container__value--cart">
+                            <span data-cart-amount>{{ product.qty }}</span>
+                        </p>
+                        <button
+                                type="button"
+                                class="amount-container__button amount-container__button--cart"
+                                data-action="increase">
+                            <span>+</span>
+                        </button>
+                    </div>
+
+                    <p class="cart-product__info">
+                        <span class="cart-product__quantity" data-cart-qty-label>{{ product.qty }} x </span>
+                        {{ product.price }}₴
+                    </p>
+                </div>
+            </a>
+
+            <button
+                    type="button"
+                    class="cart-product__delete"
+                    data-cart-key="{{ product.key }}"
+                    aria-label="Видалити товар"
+            >
+                <span class="cart-product__icon icon icon-cancel-circle"></span>
+            </button>
+        </div>
+        {%endfor%}
+    </div>
+
+    <div class="cart__footer cart-total">
+        <div class="cart-total__block">
+            <p class="cart-total__title">Загальна вартість</p>
+
+            <p class="cart-total__amount" data-cart-total>{{cart_total_sum}}₴</p>
+        </div>
+
+        <div class="cart-total__actions">
+            <button class="cart-total__close button" data-cart-close>Закрити</button>
+
+            <button class="button button--plain cart-total__btn">Оформити замовлення</button>
+        </div>
+    </div>
+</div>
+{%else%}
+<div class="cart__empty">
+    <p>Кошик поки пустий</p>
+    <button class="button" data-cart-close>Закрити</button>
+</div>
+{%endif%}

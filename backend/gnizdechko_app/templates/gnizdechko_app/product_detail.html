@@ -1,0 +1,132 @@
+{% extends "gnizdechko_app/base.html" %}
+{% load static %}
+{% block content %}
+<!--#object-->
+<div class="product-detail">
+    <div class="product-detail__container">
+        <div class="product-detail__wrapper">
+            <div class="breadcrumbs">
+                <ul class="breadcrumbs__list">
+                    <li class="breadcrumbs__item">
+                        <a href="{%url 'home'%}" class="breadcrumbs__link">Головна</a>
+                    </li>
+
+                    <li>
+                        <span class="breadcrumbs__icons">>></span>
+                    </li>
+
+                    <li class="breadcrumbs__item">
+                        <a href="{%url 'products-category' object.category.slug%}" class="breadcrumbs__link">{{object.category}}</a>
+                    </li>
+
+                    <li>
+                        <span class="breadcrumbs__icons">>></span>
+                    </li>
+
+                    <li class="breadcrumbs__item breadcrumbs__item--current">
+                        {{object}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="product-detail__block">
+                <div class="product-detail__images">
+                    <div class="product-detail__main-image">
+                        <img id="product-main-image" src="{{ object.main_image.url }}" alt="{{object}}" decoding="async"
+                             fetchpriority="high">
+                    </div>
+
+                    <div class="product-detail__thumbnails">
+                        <button
+                                type="button"
+                                class="product-detail__thumb is-active"
+                                data-image="{{ object.main_image.url }}"
+                        >
+                            <img
+                                    src="{{ object.main_image.url }}"
+                                    alt="{{ object.title }}"
+                                    loading="lazy"
+                                    decoding="async"
+                            >
+                        </button>
+
+                        {% for image in object.images.all %}
+                        <button
+                                type="button"
+                                class="product-detail__thumb"
+                                data-image="{{ image.image.url }}"
+                        >
+                            <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ object.title }}"
+                                    loading="lazy"
+                                    decoding="async"
+                            >
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="product-detail__info detail-info">
+                    <div class="detail-info__header">
+                        <h3 class="detail-info__title">{{object}}</h3>
+
+                        {%if object.subtitle%}
+                        <h5 class="detail-info__subtitle">{{object.subtitle}}</h5>
+                        {%endif%}
+                    </div>
+
+                    <div class="detail-info__main">
+                        <p class="detail-info__description">{{object.description}}</p>
+                    </div>
+
+                    <div class="detail-info__footer products-details" data-product-scope>
+                        {% if object.colors.exists %}
+                        <div class="detail-info__colors colors">
+                            <h4 class="colors__title">Доступні кольори</h4>
+
+                            <div class="colors__block" aria-label="Кольори">
+                                {% for color in object.colors.all %}
+                                <span
+                                        class="colors__dot"
+                                        data-color-id="{{ color.id }}"
+                                        title="{{ color.name }}"
+                                        aria-label="{{ color.name }}"
+                                        style="background-color: {{ color.hex|default:'#d9d9d9' }};"
+                                ></span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="products-details__prices">
+                            {%if object.sale_price%}
+                            <p class="products-details__sale products-details__sale--page">{{ object.sale_price }}₴</p>
+                            {%endif%}
+
+                            <p class="products-details__price products-details__price--page {% if product.sale_price %}products-details__price--old{% endif %}">
+                                {{ object.price }}₴</p>
+                        </div>
+
+                        <div class="detail-info__block">
+                            <div class="amount-container">
+                                <button type="button" class="amount-container__button" data-action="decrease">
+                                    <span>-</span>
+                                </button>
+                                <p class="amount-container__value">
+                                    <span data-amount>1</span>
+                                </p>
+                                <button type="button" class="amount-container__button" data-action="increase">
+                                    <span>+</span>
+                                </button>
+                            </div>
+
+                            <button class="detail-info__add button" data-add-to-cart data-product-id="{{ object.id }}">Додати в кошик</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

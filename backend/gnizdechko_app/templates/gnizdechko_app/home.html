@@ -1,0 +1,379 @@
+{% extends "gnizdechko_app/base.html" %}
+{% load static %}
+{% block content %}
+<div class="hero">
+    <div class="hero__wrapper">
+        <div class="hero__image">
+            <img src="{%static 'images/hero/hero.jpg'%}" alt="Український святковий стіл">
+        </div>
+
+        <div class="hero__block">
+            <p class="hero__moto">" Свій до свого по своє "</p>
+
+            <h5 class="hero__subtitle">Душевна оздоба твоєї оселі "Gnizde.4ko"</h5>
+        </div>
+    </div>
+</div>
+
+<div class="products-home">
+    <div class="products-home__wrapper">
+        <h2 class="products-home__title">Наші товари</h2>
+        <div class="home-grid">
+            <a href="{%url 'products-category' 'velykden'%}">
+                <div class="home-grid__container" data-label="Великдень">
+                    <img src="{%static 'images/products/velykoden.jpg'%}" alt="Секція Великодень">
+                </div>
+            </a>
+
+            <a href="{%url 'products-category' 'pavuk'%}">
+                <div class="home-grid__container" data-label="Павук">
+                    <img src="{%static 'images/products/pavyk.jpg'%}" alt="Секція Павук">
+                </div>
+            </a>
+
+            <a href="{%url 'products-category' 'vyshyvka'%}">
+                <div class="home-grid__container" data-label="Вишивка">
+                    <img src="{%static 'images/products/vyshyvka.jpg'%}" alt="Секція Вишивка">
+                </div>
+            </a>
+
+            <a href="{%url 'products-category' 'vinky'%}">
+                <div class="home-grid__container" data-label="Вінки">
+                    <img src="{%static 'images/products/vinky.jpg'%}" alt="Секція Вінки">
+                </div>
+            </a>
+
+            <a href="{%url 'products-category' 'pysanky'%}">
+                <div class="home-grid__container" data-label="Писанки">
+                    <img src="{%static 'images/products/pysanky.jpg'%}" alt="Секція Писанки">
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="features">
+    <div class="container">
+        <div class="features__wrapper">
+            <h2 class="features__title">Наші переваги</h2>
+
+            <div class="features__grid">
+                <div class="features__block">
+                    <span class="features__icon icon icon-history"></span>
+
+                    <p class="features__text">Засновано у 2016 року</p>
+                </div>
+
+                <div class="features__block">
+                    <span class="features__icon icon icon-leaf"></span>
+
+                    <p class="features__text">Виключно природні складники</p>
+                </div>
+
+                <div class="features__block">
+                    <span class="features__icon icon icon-earth"></span>
+
+                    <p class="features__text">Доставка в будь-яку країну</p>
+                </div>
+
+                <div class="features__block">
+                    <span class="features__icon icon icon-heart"></span>
+
+                    <p class="features__text">Вироби під замовлення</p>
+                </div>
+
+                <div class="features__block">
+                    <span class="features__icon icon icon-price-tags"></span>
+
+                    <p class="features__text">Опт та вигідні умови</p>
+                </div>
+
+                <div class="features__block">
+                    <span class="features__icon icon icon-checkmark"></span>
+
+                    <p class="features__text">Ручна робота та контроль якості</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="about-us">
+    <div class="about-us__wrapper">
+        <h2 class="about-us__title">Про нас</h2>
+
+        <div class="swiper swiper-about">
+            <div class="swiper-wrapper">
+
+                <div class="swiper-slide">
+                    <div class="about-us-card">
+                        <div class="about-us-card__grid about-us-card__grid--first">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/village.jpeg'%}" alt="Українське село">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/village.jpeg'%}" alt="Українське село">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/village.jpeg'%}" alt="Українське село">
+                            </div>
+                        </div>
+
+                        <div class="about-us-card__image">
+                            <img src="{%static 'images/about-us/village.jpeg'%}" alt="Українське село">
+                        </div>
+
+                        <div class="about-us-card__content">
+                            <span class="about-us-card__badge">Наша історія</span>
+                            <h3 class="about-us-card__subtitle">Сумщина</h3>
+
+                            <p class="about-us-card__text">
+                                Ми — родина з Сумщини, яку об’єднує любов до села і землі. Разом
+                                з татом і мамою ми вирощуємо злакові, сіно, добуваємо рогіз з боліт, тримаємо птицю і
+                                працюємо з тим, що дає нам природа.
+                            </p>
+                        </div>
+
+                        <div class="about-us-card__grid about-us-card__grid--first">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/village.jpeg'%}" alt="Українське село">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/village.jpeg'%}" alt="Українське село">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/village.jpeg'%}" alt="Українське село">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="about-us-card">
+                        <div class="about-us-card__grid about-us-card__grid--second">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/gusy.jpg'%}" alt="Гуси">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/gusy.jpg'%}" alt="Гуси">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/gusy.jpg'%}" alt="Гуси">
+                            </div>
+                        </div>
+
+                        <div class="about-us-card__image">
+                            <img src="{%static 'images/about-us/gusy.jpg'%}" alt="Гуси">
+                        </div>
+
+                        <div class="about-us-card__content">
+                            <span class="about-us-card__badge">Матеріали</span>
+                            <h3 class="about-us-card__subtitle">Солома і яйця</h3>
+
+                            <p class="about-us-card__text">
+                                Із соломи та сіна народжуються наші солом’яні павуки й вінки, а яєчну шкаралупу від
+                                власної птиці ми використовуємо для створення вінків та розпису до Великодня.
+                            </p>
+                        </div>
+
+                        <div class="about-us-card__grid about-us-card__grid--second">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/gusy.jpg'%}" alt="Гуси">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/gusy.jpg'%}" alt="Гуси">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/gusy.jpg'%}" alt="Гуси">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="about-us-card">
+                        <div class="about-us-card__grid about-us-card__grid--third">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+                        </div>
+
+                        <div class="about-us-card__image">
+                            <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                        </div>
+
+                        <div class="about-us-card__content">
+                            <span class="about-us-card__badge">Символи</span>
+                            <h3 class="about-us-card__subtitle">Злакові</h3>
+
+                            <p class="about-us-card__text">
+                                Для нас злакові мають особливе значення — жовта смуга прапора України
+                                символізує зерно й хліб, основу життя і витривалості.
+                            </p>
+                        </div>
+
+                        <div class="about-us-card__grid about-us-card__grid--third">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/zlakovy.jpg'%}" alt="Злакові">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="about-us-card">
+                        <div class="about-us-card__grid about-us-card__grid--forth">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+                        </div>
+
+                        <div class="about-us-card__image">
+                            <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                        </div>
+
+                        <div class="about-us-card__content">
+                            <span class="about-us-card__badge">Про село</span>
+
+                            <h3 class="about-us-card__subtitle">
+                                Жива земля
+                            </h3>
+
+                            <p class="about-us-card__text">
+                                Війна показала, наскільки важливо мати живі села — місця,
+                                де є земля, їжа, праця і памʼять.
+                            </p>
+                        </div>
+
+                        <div class="about-us-card__grid about-us-card__grid--forth">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/selo.jpg'%}" alt="Місток біля дому">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="about-us-card">
+                        <div class="about-us-card__grid about-us-card__grid--fifth">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/horse.jpg'%}" alt="Чоловік з конем">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/horse.jpg'%}" alt="Чоловік з конем">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/horse.jpg'%}" alt="Чоловік з конем">
+                            </div>
+                        </div>
+
+                        <div class="about-us-card__image">
+                            <img src="{%static 'images/about-us/horse.jpg'%}" alt="Чоловік з конем">
+                        </div>
+
+                        <div class="about-us-card__content">
+                            <span class="about-us-card__badge">Сенс</span>
+
+                            <h3 class="about-us-card__subtitle">
+                                Життя, що повертається
+                            </h3>
+
+                            <p class="about-us-card__text">
+                                Своїми виробами ми хочемо нагадати: навіть занедбані села можуть
+                                знову ожити, якщо в них повертається життя і любов.
+                                А з того, що лежить під ногами, і що часто не помічає людське око
+                                та не цінує розум, можна створити справжні вироби мистецтва.
+                            </p>
+                        </div>
+
+                        <div class="about-us-card__grid about-us-card__grid--fifth">
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/horse.jpg'%}" alt="Чоловік з конем">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/horse.jpg'%}" alt="Чоловік з конем">
+                            </div>
+
+                            <div class="about-us-card__block">
+                                <img src="{%static 'images/about-us/horse.jpg'%}" alt="Чоловік з конем">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+
+        <div class="swiper-pagination-about"></div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,84 @@
+{% extends "gnizdechko_app/base.html" %}
+{% load static %}
+{% block content %}
+<!--products category-->
+<div class="products">
+    <div class="container">
+        <div class="products__wrapper">
+            <div class="breadcrumbs">
+                <ul class="breadcrumbs__list">
+                    <li class="breadcrumbs__item">
+                        <a href="{%url 'home'%}" class="breadcrumbs__link">Головна</a>
+                    </li>
+
+                    <li>
+                        <span class="breadcrumbs__icons">>></span>
+                    </li>
+
+                    <li class="breadcrumbs__item breadcrumbs__item--current">
+                        {%if category%}
+                        {{category}}
+                        {%else%}
+                        Всі товари
+                        {%endif%}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="products-filters">FILTERS</div>
+
+            {%if products%}
+            <div class="products__list products-list">
+                <div class="products-list__wrapper">
+                    <div class="products-list__grid">
+                        {%for product in products%}
+                        <div class="products-list__card">
+                            <a href="{% url 'product-detail' product.id%}" class="products-list__image">
+                                <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+                            </a>
+
+                            <h4 class="products-list__title">
+                            <span class="product-card__title-text">
+                                {{product.title}}
+                            </span>
+                            </h4>
+
+                            <div class="products-list__details products-details">
+                                <div class="products-details__prices">
+                                    {%if product.sale_price%}
+                                    <p class="products-details__sale">{{ product.sale_price }}₴</p>
+                                    {%endif%}
+
+                                    <p class="products-details__price {% if product.sale_price %}products-details__price--old{% endif %}">
+                                        {{ product.price }}₴</p>
+                                </div>
+
+                                {% with first_color=product.colors.first %}
+                                <button
+                                        class="products-details__buy button"
+                                        data-add-to-cart
+                                        {% if first_color %}data-first-color-id="{{ first_color.id }}"{% endif %}
+                                        data-product-id="{{ product.id }}">
+                                    Купити
+                                </button>
+                                {% endwith %}
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+
+                    {% if page_obj.has_next %}
+                    <button
+                            class="products-list__more"
+                            data-next-page="{{ page_obj.next_page_number }}"
+                    >
+                        Показати ще
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+            {%endif%}
+        </div>
+    </div>
+</div>
+{% endblock content %}

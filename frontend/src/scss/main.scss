@@ -1,0 +1,421 @@
+@use "abstracts/variables" as *;
+@use 'abstracts/mixins' as *;
+@use 'components/header';
+@use 'components/home';
+@use 'components/footer';
+@use 'components/products';
+@use 'components/product-detail';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  vertical-align: baseline;
+}
+
+:root {
+  font-family: var(--font-poppins), sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Cormorant', serif;
+  font-size: $text-18;
+  font-weight: $fontWeightRegular;
+  line-height: $lineHeightAdditional;
+
+  color: $colorTextPrimary;
+  background-color: $backgroundPrimary;
+
+  @include onTabletAndUp {
+    font-size: $text-20;
+  }
+
+  @include onBigTabletAndUp {
+    font-size: $text-22;
+  }
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  vertical-align: top;
+  max-width: 100%
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+button {
+  cursor: pointer;
+  color: inherit;
+  background-color: inherit;
+}
+
+.wrapper {
+  position: relative;
+
+  min-height: 100vh;
+  //overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  & > .main {
+    flex-grow: 1;
+  }
+}
+
+.mask {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+
+    display: block;
+
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
+    z-index: 8;
+  }
+
+  &.is-active {
+    &::after {
+      opacity: 1;
+    pointer-events: auto;
+    }
+  }
+}
+
+.container {
+  max-width: 2500px;
+  width: 100%;
+
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @include onTabletAndUp {
+    padding: 0 2rem;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__image {
+    width: 2.7rem;
+    height: 2.7rem;
+
+    @include onTabletAndUp {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+
+    @include onBigTabletAndUp {
+      width: 4.3rem;
+      height: 4.3rem;
+    }
+
+    img {
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+      object-position: center;
+
+      -webkit-user-select: none;
+    }
+  }
+
+  &__text {
+    font-family: 'Caveat', cursive;
+    font-size: $text-20;
+    font-weight: 700;
+    color: #7B4A32;
+
+    @include onTabletAndUp {
+      font-size: $text-24;
+    }
+
+    @include onBigTabletAndUp {
+      font-size: $text-28;
+    }
+  }
+
+
+  &--footer {
+    margin-bottom: 2rem;
+
+    .logo__image {
+      width: 7rem;
+      height: 7rem;
+    }
+
+    .logo__text {
+      font-size: $text-32;
+    }
+
+    @include onLaptopAndUp {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.breadcrumbs {
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.5rem;
+
+    @include onTabletAndUp {
+      gap: 1.3rem;
+    }
+  }
+
+  &__item {
+    position: relative;
+
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    font-size: $text-18;
+    font-weight: $fontWeightSemiBold;
+
+    @include onTabletAndUp {
+      font-size: $text-22;
+
+      max-width: 250px;
+    }
+
+    @include onBigTabletAndUp {
+      max-width: 400px;
+    }
+
+    &--current {
+      pointer-events: none;
+      font-weight: $fontWeightBold;
+
+      @include before {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+
+        display: block;
+
+        width: 100%;
+        height: 2px;
+
+        background-color: $colorTextPrimary;
+      }
+    }
+  }
+}
+
+.button {
+  flex-shrink: 0;
+
+  padding: 0.55rem 1.5rem;
+  border-radius: 0.5rem;
+
+  border: 1px solid rgba($colorTextPrimary, 0.35);
+  background: rgba($colorTextPrimary, 0.04);
+  color: $colorTextPrimary;
+
+  font-weight: $fontWeightBold;
+  letter-spacing: 0.02em;
+
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+
+  &:hover {
+    background: rgba($colorTextPrimary, 0.08);
+    border-color: rgba($colorTextPrimary, 0.55);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &--plain {
+    padding: 0.55rem 1rem;
+
+    background-color: $colorPrimary;
+    color: $colorWhite;
+
+    @include onTabletAndUp {
+      padding: 0.55rem 1.5rem;
+    }
+
+    @include onHover {
+      filter: brightness(1.3);
+      background-color: $colorPrimary;
+      color: $colorWhite;
+    }
+  }
+}
+
+.snackbar {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%) translateY(12px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+
+  background: rgba($colorTextPrimary, 1);
+  color: $backgroundPrimary;
+
+  font-size: $text-16;
+  line-height: 1.2;
+
+  width: max-content;
+  max-width: min(calc(100vw - 2rem), 520px);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 9999;
+
+  &.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  &__text {
+    display: block;
+  }
+}
+
+.amount-container {
+  display: grid;
+  grid-template-columns: 2.75rem 3.25rem 2.75rem;
+  height: 41px;
+
+  border: 1px solid rgba($colorTextPrimary, 0.35);
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  font-size: 2rem;
+  line-height: 1;
+
+  background: transparent;
+
+  &--cart {
+    grid-template-columns: 2rem 2.5rem 2rem;
+    height: 30px;
+  }
+
+  &__button {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+
+    line-height: 1;
+    color: $colorTextPrimary;
+
+    span {
+      transform: translateY(-2px);
+    }
+
+    &--cart {
+      span {
+        font-size: $text-20;
+      }
+    }
+
+    &:hover {
+      background: rgba($colorTextPrimary, 0.06);
+    }
+
+    &:active {
+      background: rgba($colorTextPrimary, 0.12);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+
+  &__value {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-left: 1px solid rgba($colorTextPrimary, 0.25);
+    border-right: 1px solid rgba($colorTextPrimary, 0.25);
+
+    span {
+      transform: translateY(-2px);
+    }
+
+    &--cart {
+      span {
+        font-size: $text-20;
+      }
+    }
+  }
+}

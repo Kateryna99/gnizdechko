@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: gnizdechko-demo
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      npm install --prefix frontend
+      npm run build --prefix frontend
+      python backend/manage.py collectstatic --noinput
+      python backend/manage.py migrate
+    startCommand: gunicorn backend.config.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings
+      - key: PYTHONPATH
+        value: backend
