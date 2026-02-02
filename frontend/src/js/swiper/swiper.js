@@ -5,7 +5,8 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-new Swiper('.swiper', {
+export const initSwiper = () => {
+    new Swiper('.swiper', {
     modules: [Pagination, Navigation],
     slidesPerView: 1,
     spaceBetween: 24,
@@ -40,3 +41,4 @@ new Swiper('.swiper', {
         }
     },
 })
+}
