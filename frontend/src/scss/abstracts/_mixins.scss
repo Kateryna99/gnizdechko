@@ -73,6 +73,8 @@
   font-weight: $fontWeightSemiBold;
   line-height: $lineHeightAdditional;
 
+  text-transform: capitalize;
+
   color: $colorTextPrimary;
 
   @include onTabletAndUp {

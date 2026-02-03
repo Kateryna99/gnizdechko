@@ -129,6 +129,14 @@
 
   &__wrapper {
     padding: 1.5rem 0 3rem;
+
+    @include onTabletAndUp {
+      padding: 2rem 0 3.5rem;
+    }
+
+    @include onLaptopAndUp {
+      padding: 4rem 0 5rem;
+    }
   }
 
   &__title {
@@ -179,20 +187,22 @@
 
 .home-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 180px));
   gap: 1rem;
 
   padding: 0 1rem;
 
   @include onTabletAndUp {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 250px));
     padding: 0 2rem;
   }
 
+  @include onBigTabletAndUp {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 220px));
+  }
+
   @include onLaptopAndUp {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 280px));
   }
 
   &__item {
@@ -265,6 +275,10 @@
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+
+    @include onLaptopAndUp {
+      padding: 4rem 0 6rem;
+    }
   }
 
   &__title {
@@ -279,7 +293,7 @@
     row-gap: 1rem;
 
     @include onLaptopAndUp {
-      grid-template-columns: repeat(3, minmax(100px, 1fr));
+      grid-template-columns: repeat(5, minmax(100px, 1fr));
     }
   }
 

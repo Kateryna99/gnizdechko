@@ -223,6 +223,8 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
 
+    text-transform: capitalize;
+
     font-size: $text-18;
     font-weight: $fontWeightSemiBold;
 
@@ -312,7 +314,7 @@ button {
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
 
-  background: rgba($colorTextPrimary, 1);
+  background: rgba($colorPrimary, 1);
   color: $backgroundPrimary;
 
   font-size: $text-16;

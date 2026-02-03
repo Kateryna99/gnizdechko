@@ -35,7 +35,7 @@ class ProductListView(ListView):
         slug = self.kwargs.get("slug")
 
         ctx["current_category_slug"] = slug
-        ctx["category"] = get_object_or_404(Category, slug=slug) if slug else None
+        ctx["category"] = get_object_or_404(Category, slug=slug) if slug else 'Новинки'
         ctx["enabled_filters"] = FILTERS_BY_CATEGORY.get(slug, DEFAULT_FILTERS)
 
         return ctx
