@@ -41,7 +41,7 @@ def vite_js(entry="src/js/index.js"):
 @register.simple_tag
 def vite_css(entry="src/js/index.js"):
     if VITE_DEV:
-        return ""
+        return ""  # на dev CSS інжектить Vite
 
     manifest = _load_manifest()
     item = manifest.get(entry) or manifest.get(f"./{entry}")
@@ -52,4 +52,5 @@ def vite_css(entry="src/js/index.js"):
     if not css:
         return ""
 
-    return settings.STATIC_URL + "dist/" + css[0]
+    href = settings.STATIC_URL + "dist/" + css[0]
+    return mark_safe(f'<link rel="stylesheet" href="{href}">')

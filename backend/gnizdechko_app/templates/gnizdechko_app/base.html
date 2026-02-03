@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'icomoon/icons.css' %}">
+    {% vite_css 'src/js/index.js' %}
 
     <title>Gnizde.4ko</title>
 </head>
@@ -164,7 +165,7 @@
 <!--{% endif %}-->
 
 <div class="snackbar" id="snackbar" aria-live="polite" aria-atomic="true">
-  <span class="snackbar__text" id="snackbarText"></span>
+    <span class="snackbar__text" id="snackbarText"></span>
 </div>
 </body>
 </html>
