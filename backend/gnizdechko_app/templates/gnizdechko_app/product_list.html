@@ -56,6 +56,7 @@
                                 {% with first_color=product.colors.first %}
                                 <button
                                         class="products-details__buy button"
+                                        type="button"
                                         data-add-to-cart
                                         {% if first_color %}data-first-color-id="{{ first_color.id }}"{% endif %}
                                         data-product-id="{{ product.id }}">

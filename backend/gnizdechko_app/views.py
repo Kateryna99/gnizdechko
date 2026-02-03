@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Product, Category
 from .constants import FILTERS_BY_CATEGORY, DEFAULT_FILTERS
 
 def home(request):
     return render(request, 'gnizdechko_app/home.html')
 
+@method_decorator(ensure_csrf_cookie, name="dispatch")
 class ProductListView(ListView):
     model = Product
     context_object_name = "products"
@@ -28,5 +31,6 @@ class ProductListView(ListView):
 
         return ctx
 
+@method_decorator(ensure_csrf_cookie, name="dispatch")
 class ProductDetailView(DetailView):
     model = Product

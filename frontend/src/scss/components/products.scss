@@ -45,8 +45,6 @@
     background: rgba(255, 255, 255, 0.35);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 
-    cursor: pointer;
-
     transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 
     &:hover {
@@ -165,5 +163,10 @@
       text-decoration-thickness: 2px;
       text-decoration-color: rgba($colorTextPrimary, 0.55);
     }
+  }
+
+  &__buy {
+    position: relative;
+  z-index: 2;
   }
 }

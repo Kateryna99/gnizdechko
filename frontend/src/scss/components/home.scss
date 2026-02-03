@@ -42,12 +42,12 @@
     max-width: 100%;
     width: 100%;
 
-    height: calc(100vh - 4rem);
+    height: calc(100svh - 4rem);
 
     border-bottom: 2px solid $colorAccent;
 
     @include onTabletAndUp {
-      height: calc(100vh - 5rem);
+      height: calc(100svh - 5rem);
 
       border-bottom: none;
     }
