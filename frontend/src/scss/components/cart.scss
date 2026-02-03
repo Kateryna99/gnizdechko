@@ -42,6 +42,17 @@
     height: 3rem;
   }
 
+  &__header {
+    padding: 0 1rem 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    border-bottom: 1px solid $colorPrimary;
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -78,13 +89,13 @@
 
   &__block {
     width: 100%;
-    height: calc(100vh - 4rem);
+    height: 100svh;
 
     overflow-y: auto;
 
     position: fixed;
     right: 0;
-    top: 4rem;
+    top: 0;
     z-index: 9;
 
     opacity: 0;
@@ -93,13 +104,9 @@
     transform: translateX(100%);
     transition-duration: 0.5s;
 
-    border-top: 1px solid $colorPrimary;
     background-color: $backgroundPrimary;
 
     @include onTabletAndUp {
-      height: calc(100vh - 5rem);
-      top: 5rem;
-
       transform: translateX(100%);
 
       width: 65%;
@@ -264,6 +271,10 @@
       filter: brightness(1.3);
     }
   }
+
+  &__icon {
+    font-size: 0.8rem;
+  }
 }
 
 .cart-total {
@@ -271,10 +282,6 @@
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-  }
-
-  &__title {
-
   }
 
   &__amount {

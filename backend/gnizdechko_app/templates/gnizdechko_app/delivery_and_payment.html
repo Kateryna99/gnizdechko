@@ -1,0 +1,52 @@
+{% extends "gnizdechko_app/base.html" %}
+{% load static %}
+{% block content %}
+<div class="payments-delivery">
+    <div class="container">
+        <div class="payments-delivery__wrapper">
+            <div class="breadcrumbs">
+                <ul class="breadcrumbs__list">
+                    <li class="breadcrumbs__item">
+                        <a href="{%url 'home'%}" class="breadcrumbs__link">Головна</a>
+                    </li>
+
+                    <li>
+                        <span class="breadcrumbs__icons">>></span>
+                    </li>
+
+                    <li class="breadcrumbs__item breadcrumbs__item--current">
+                        Доставка та оплата
+                    </li>
+                </ul>
+            </div>
+
+            <h2 class="title">Оплата та доставка</h2>
+
+            <div class="payments-delivery__block">
+                <div class="payments-delivery__item">
+                    <h4 class="payments-delivery__title">ВАРІАНТИ ОПЛАТИ</h4>
+                    <p class="payments-delivery__text">Онлайн оплата картою Visa або MasterCard, Apple Pay, Google Pay та Privat24 через Liqpay</p>
+                </div>
+
+                <div class="payments-delivery__item">
+                    <h4 class="payments-delivery__title">ВАРІАНТИ ДОСТАВКИ</h4>
+                    <p class="payments-delivery__text">Відправленням замовлень здійснюється протягом 3-5 робочих днів.</p>
+                </div>
+                
+                <div class="payments-delivery__info">
+                    <h5>Можливі наступні варіанти доставки:</h5>
+                    <ul class="payments-delivery__list">
+                        <li>– До відділення Нової Пошти</li>
+                        <li>– В поштомат Нової Пошти</li>
+                        <li>– Кур’єрська доставка Нової Пошти</li>
+                    </ul>
+                </div>
+
+                <div class="payments-delivery__item">
+                    <p class="payments-delivery__text">Оплата доставки не входить у вартість товару і оплачується одержувачем на відділенні Нової пошти, за тарифами Нової пошти, окрім випадків онлайн оплати доставки</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

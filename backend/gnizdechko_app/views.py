@@ -8,11 +8,14 @@ from .constants import FILTERS_BY_CATEGORY, DEFAULT_FILTERS
 def home(request):
     return render(request, 'gnizdechko_app/home.html')
 
+def delivery_and_payment(request):
+    return render(request, 'gnizdechko_app/delivery_and_payment.html')
+
 @method_decorator(ensure_csrf_cookie, name="dispatch")
 class ProductListView(ListView):
     model = Product
     context_object_name = "products"
-    paginate_by = 12
+    paginate_by = 15
 
     def get_queryset(self):
         qs = Product.objects.prefetch_related("images", "colors")

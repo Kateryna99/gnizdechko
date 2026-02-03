@@ -135,7 +135,6 @@
 
   &__title {
     @include titleMain;
-    font-family: "Cormorant", serif;
     font-weight: $fontWeightBold;
     line-height: 1;
   }

@@ -9,6 +9,7 @@ export const closeCart = () => {
     cartBlock?.classList.remove('is-active');
     main?.classList.remove('is-active');
     footer?.classList.remove('is-active');
+    header?.classList.remove('is-active');
 };
 
 export const initCartToggle = () => {
@@ -18,6 +19,7 @@ export const initCartToggle = () => {
         cartBlock.classList.add('is-active');
         main.classList.add('is-active');
         footer.classList.add('is-active');
+        header.classList.add('is-active')
     };
 
     const isOpen = () => cartBlock.classList.contains('is-active');

@@ -5,6 +5,7 @@
 @use 'components/footer';
 @use 'components/products';
 @use 'components/product-detail';
+@use 'components/delivery-and-payment';
 
 *,
 *::before,
@@ -14,10 +15,6 @@
   border: none;
   box-sizing: border-box;
   vertical-align: baseline;
-}
-
-:root {
-  font-family: var(--font-poppins), sans-serif;
 }
 
 html,
@@ -418,4 +415,15 @@ button {
       }
     }
   }
+}
+
+.no-data {
+  &__text {
+
+  }
+}
+
+.title {
+  align-self: center;
+  @include titleMain;
 }

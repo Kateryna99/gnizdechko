@@ -1,0 +1,33 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.payments-delivery {
+  &__wrapper {
+    padding: 5.5rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__item {
+  }
+
+  &__title {
+    font-weight: $fontWeightBold;
+  }
+
+  &__text {
+  }
+
+  &__info {
+  }
+
+  &__list {
+  }
+}

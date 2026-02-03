@@ -1,5 +1,11 @@
 {%if cart_items%}
 <div class="cart__wrapper">
+    <div class="cart__header">
+        <h4 class="cart__title">Кошик({{cart_total_qty}})</h4>
+
+        <span class="icon icon-close" data-cart-close></span>
+    </div>
+
     <div class="cart__flex">
         {%for product in cart_items%}
         <div class="cart-product">
@@ -58,7 +64,7 @@
                     data-cart-key="{{ product.key }}"
                     aria-label="Видалити товар"
             >
-                <span class="cart-product__icon icon icon-cancel-circle"></span>
+                <span class="cart-product__icon icon icon-close"></span>
             </button>
         </div>
         {%endfor%}
