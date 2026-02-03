@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-se(cd*wivw(cn=yt!#h+n&4s01=ld5sb60txlgpwdv0@r%*091'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 "cart.context_processors.cart_context",
                 "gnizdechko_app.context_processors.categories_context",
+                "config.context_processors.debug_flag",
             ],
         },
     },
@@ -130,3 +131,6 @@ MEDIA_URL = '/media/'
 ######## SESSION COOKIE
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+VITE_DEV = True
+VITE_DEV_SERVER = "http://localhost:5173"

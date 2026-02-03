@@ -94,7 +94,7 @@
     transition-duration: 0.5s;
 
     border-top: 1px solid $colorPrimary;
-    background-color: $colorSurface;
+    background-color: $backgroundPrimary;
 
     @include onTabletAndUp {
       height: calc(100vh - 5rem);

@@ -32,7 +32,7 @@
                 <div class="products-list__wrapper">
                     <div class="products-list__grid">
                         {%for product in products%}
-                        <div class="products-list__card">
+                        <div class="products-list__card {% if product.is_new %}products-list__card--new{% endif %}">
                             <a href="{% url 'product-detail' product.id%}" class="products-list__image">
                                 <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
                             </a>
@@ -43,26 +43,13 @@
                             </span>
                             </h4>
 
-                            <div class="products-list__details products-details">
-                                <div class="products-details__prices">
-                                    {%if product.sale_price%}
-                                    <p class="products-details__sale">{{ product.sale_price }}₴</p>
-                                    {%endif%}
+                            <div class="products-details products-details__prices">
+                                {%if product.sale_price%}
+                                <p class="products-details__sale">{{ product.sale_price }}₴</p>
+                                {%endif%}
 
-                                    <p class="products-details__price {% if product.sale_price %}products-details__price--old{% endif %}">
-                                        {{ product.price }}₴</p>
-                                </div>
-
-                                {% with first_color=product.colors.first %}
-                                <button
-                                        class="products-details__buy button"
-                                        type="button"
-                                        data-add-to-cart
-                                        {% if first_color %}data-first-color-id="{{ first_color.id }}"{% endif %}
-                                        data-product-id="{{ product.id }}">
-                                    Купити
-                                </button>
-                                {% endwith %}
+                                <p class="products-details__price {% if product.sale_price %}products-details__price--old{% endif %}">
+                                    {{ product.price }}₴</p>
                             </div>
                         </div>
                         {%endfor%}

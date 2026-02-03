@@ -7,6 +7,7 @@ import {initCartToggle} from "./burger/cart.js";
 import {initColorPicker} from "./utils/init-color-picker.js";
 import {initAddToCart, initCartRemove} from "./utils/add-product.js";
 import {initCartQty} from "./utils/init-cart-qty.js";
+import {initHeaderScroll} from "./utils/init-header-scroll.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     initBurgerMenu()
@@ -18,4 +19,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initAddToCart()
     initCartRemove()
     initCartQty()
+    initHeaderScroll()
 });

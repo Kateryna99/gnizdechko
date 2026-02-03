@@ -19,35 +19,13 @@
     <div class="products-home__wrapper">
         <h2 class="products-home__title">Наші товари</h2>
         <div class="home-grid">
-            <a href="{%url 'products-category' 'velykden'%}">
-                <div class="home-grid__container" data-label="Великдень">
-                    <img src="{%static 'images/products/velykoden.jpg'%}" alt="Секція Великодень">
+            {% for cat in all_categories %}
+            <a href="{% url 'products-category' cat.slug %}" class="home-grid__item">
+                <div class="home-grid__container" data-label="{{ cat.name|default:'' }}">
+                    <img src="{{ cat.main_image.url }}" alt="Секція {{ cat.name }}">
                 </div>
             </a>
-
-            <a href="{%url 'products-category' 'pavuk'%}">
-                <div class="home-grid__container" data-label="Павук">
-                    <img src="{%static 'images/products/pavyk.jpg'%}" alt="Секція Павук">
-                </div>
-            </a>
-
-            <a href="{%url 'products-category' 'vyshyvka'%}">
-                <div class="home-grid__container" data-label="Вишивка">
-                    <img src="{%static 'images/products/vyshyvka.jpg'%}" alt="Секція Вишивка">
-                </div>
-            </a>
-
-            <a href="{%url 'products-category' 'vinky'%}">
-                <div class="home-grid__container" data-label="Вінки">
-                    <img src="{%static 'images/products/vinky.jpg'%}" alt="Секція Вінки">
-                </div>
-            </a>
-
-            <a href="{%url 'products-category' 'pysanky'%}">
-                <div class="home-grid__container" data-label="Писанки">
-                    <img src="{%static 'images/products/pysanky.jpg'%}" alt="Секція Писанки">
-                </div>
-            </a>
+            {% endfor %}
         </div>
     </div>
 </div>

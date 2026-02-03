@@ -5,6 +5,11 @@ class Category(models.Model):
     name = models.CharField(max_length=120, unique=True)
     slug = models.SlugField(max_length=120, unique=True)
 
+    main_image = models.ImageField(
+        upload_to="categories/",
+        default="categories/default.jpg",
+    )
+
     def __str__(self):
         return self.name
 
@@ -30,6 +35,9 @@ class Product(models.Model):
 
     price = models.PositiveIntegerField()
     sale_price = models.PositiveIntegerField(null=True, blank=True)
+
+    is_new = models.BooleanField(default=False, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     main_image = models.ImageField(
         upload_to="products/main/",

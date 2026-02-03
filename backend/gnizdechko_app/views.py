@@ -16,10 +16,16 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         qs = Product.objects.prefetch_related("images", "colors")
+
+        mode = self.kwargs.get("mode")
         slug = self.kwargs.get("slug")
-        if slug:
+
+        if mode == "new":
+            qs = qs.filter(is_new=True)
+        elif slug:
             qs = qs.filter(category__slug=slug)
-        return qs.order_by("price")
+
+        return qs.order_by("-created_at")
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

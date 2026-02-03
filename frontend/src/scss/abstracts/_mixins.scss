@@ -95,3 +95,26 @@
     font-size: $text-32;
   }
 }
+
+@mixin before-new-badge {
+  &::before {
+    content: "Новинка";
+
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 5;
+
+    padding: 0.35rem 0.6rem;
+    border-radius: 0.5rem;
+
+    font-size: $text-14;
+    font-weight: $fontWeightSemiBold;
+    line-height: 1;
+
+    color: $colorWhite;
+    background-color: $colorPrimary;
+
+    pointer-events: none;
+  }
+}

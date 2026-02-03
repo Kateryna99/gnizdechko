@@ -53,18 +53,3 @@ def delete_old_extra_image_on_change(sender, instance, **kwargs):
 
     if old.image and old.image.name and old.image != instance.image:
         _safe_delete_file(old.image)
-
-
-@receiver(post_migrate)
-def create_demo_superuser(sender, **kwargs):
-    # тільки на Render (або зроби свою умову)
-    if os.environ.get("RENDER") != "true":
-        return
-
-    User = get_user_model()
-    username = os.environ.get("DEMO_ADMIN_USER", "admin")
-    password = os.environ.get("DEMO_ADMIN_PASSWORD", "admin12345")
-    email = os.environ.get("DEMO_ADMIN_EMAIL", "admin@example.com")
-
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username=username, email=email, password=password)

@@ -26,42 +26,67 @@
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
     align-items: stretch;
+
+    @include onTabletAndUp {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    @include onBigTabletAndUp {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    @include onLaptopAndUp {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
   }
 
   &__card {
-    height: 100%;
+    position: relative;
 
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    align-items: center;
+    gap: 0.5rem;
 
-    padding: 1rem;
-    border: 1px solid rgba($colorTextPrimary, 0.18);
-    border-radius: 0.7rem;
+    height: 100%;
+    padding: 0 0 0.5rem;
 
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border-radius: 0.3rem;
 
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    overflow: hidden;
 
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.10);
-      border-color: rgba($colorTextPrimary, 0.28);
+    border: 1px solid rgba($colorTextPrimary, 0.10);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+
+    transition: transform 180ms ease, box-shadow 180ms ease;
+
+    @include hover-supported {
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 22px 55px rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    &--new {
+      @include before-new-badge;
     }
   }
 
   &__image {
     width: 100%;
     aspect-ratio: 4 / 5;
-    border-radius: 0.7rem;
     overflow: hidden;
 
-    background: rgba($colorTextPrimary, 0.06);
-    border: 1px solid rgba($colorTextPrimary, 0.12);
+    @include onTabletAndUp {
+      aspect-ratio: 1 / 1;
+    }
+
+    @include onLaptopAndUp {
+      aspect-ratio: 4 / 5;
+    }
 
     img {
       width: 100%;
@@ -78,10 +103,11 @@
   &__title {
     flex-grow: 1;
 
-    font-size: $text-24;
+    padding: 0 0.3rem;
+
+    text-align: center;
     font-weight: $fontWeightSemiBold;
-    line-height: 1;
-    color: $colorTextPrimary;
+    line-height: 1.15;
 
     span {
       display: -webkit-box;
@@ -130,7 +156,7 @@
   }
 
   &__sale {
-    font-size: $text-24;
+    font-size: $text-20;
     font-weight: $fontWeightBold;
     color: $colorTextPrimary;
     letter-spacing: -0.02em;
@@ -144,7 +170,7 @@
 
   &__price {
     color: $colorTextPrimary;
-    font-size: $text-22;
+    font-size: $text-20;
     font-weight: $fontWeightBold;
     letter-spacing: -0.02em;
     opacity: 0.92;
@@ -163,10 +189,5 @@
       text-decoration-thickness: 2px;
       text-decoration-color: rgba($colorTextPrimary, 0.55);
     }
-  }
-
-  &__buy {
-    position: relative;
-  z-index: 2;
   }
 }

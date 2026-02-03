@@ -50,9 +50,12 @@
                             <li class="nav-header__item {% if request.resolver_match.url_name == 'home'%}nav-header__item--is-active{% endif %}">
                                 <a href="{%url 'home'%}" class="nav-header__link">Головна</a>
                             </li>
-                            <li class="nav-header__item {% if request.resolver_match.url_name == 'products' and not current_category_slug %}nav-header__item--is-active{% endif %}">
-                                <a href="{%url 'products'%}" class="nav-header__link">Всі товари</a>
+
+                            {% if has_new_products %}
+                            <li class="nav-header__item {% if request.resolver_match.url_name == 'products-new' %}nav-header__item--is-active{% endif %}">
+                                <a href="{% url 'products-new' %}" class="nav-header__link">Новинки</a>
                             </li>
+                            {% endif %}
                             {% for category in all_categories %}
                             <li class="nav-header__item {% if request.resolver_match.kwargs.slug == category.slug %}nav-header__item--is-active{% endif %}">
                                 <a href="{% url 'products-category' category.slug %}" class="nav-header__link">
@@ -151,18 +154,21 @@
         </div>
 
         <div class="footer_bottom">
-            <p>© 2026 Gnizde.4ko {{DEBUG}}</p>
+            <p>© 2026 Gnizde.4ko</p>
         </div>
     </footer>
 </div>
 
 
-<script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
-<!--{% if DEBUG %}-->
-<!--  <script type="module" src="http://localhost:5173/src/js/index.js"></script>-->
-<!--{% else %}-->
-<!--  <script type="module" src="{% vite_js 'src/js/index.js' %}"></script>-->
-<!--{% endif %}-->
+{% if DEBUG %}
+  <script type="module" src="http://localhost:5173/src/js/index.js"></script>
+{% else %}
+  <script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
+{% endif %}
+
+<script>
+  console.log('BASE HTML LOADED');
+</script>
 
 <div class="snackbar" id="snackbar" aria-live="polite" aria-atomic="true">
     <span class="snackbar__text" id="snackbarText"></span>

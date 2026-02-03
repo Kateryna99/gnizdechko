@@ -14,15 +14,19 @@
   display: flex;
   align-items: center;
 
-  background-color: $colorSurface;
+  border: 1px solid transparent;
+
+  transition: border-color 0.3s ease;
+
+  background-color: $backgroundPrimary;
+
+  &--active {
+    border-color: $colorPrimary;
+  }
 
   @include onTabletAndUp {
     height: 5rem;
   }
-
-  //@include onBigTabletAndUp {
-  //  height: 6rem;
-  //}
 
   &__wrapper {
     padding: 0.875rem 0;
@@ -61,31 +65,19 @@
   transition-duration: 0.5s;
 
   border-top: 1px solid $colorPrimary;
-  background-color: $colorSurface;
+  background-color: $backgroundPrimary;
 
   @include onTabletAndUp {
     height: calc(100vh - 5rem);
     top: 5rem;
   }
 
+  @include onBigTabletAndUp {
+    width: 50%;
+  }
+
   @include onLaptopAndUp {
-    position: relative;
-    left: unset;
-    top: unset;
-
-    width: auto;
-    height: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-
-    border: none;
-    background-color: transparent;
+    width: 30%;
   }
 
   &--active {
@@ -104,12 +96,7 @@
 
     @include onTabletAndUp {
       padding-top: 2rem;
-      padding-right: 4rem;
-    }
-
-    @include onLaptopAndUp {
-      padding: 0;
-      display: block;
+      padding-right: 2rem;
     }
   }
 
@@ -120,11 +107,6 @@
 
     @include onTabletAndUp {
       gap: 1.5rem;
-    }
-
-    @include onLaptopAndUp {
-      flex-direction: row;
-      gap: 2rem;
     }
   }
 
@@ -152,6 +134,7 @@
     font-size: $text-28;
     font-weight: $fontWeightSemiBold;
     color: $colorAccent;
+    text-transform: capitalize;
 
     @include before {
       position: absolute;
@@ -177,15 +160,7 @@
     }
 
     @include onTabletAndUp {
-      font-size: $text-36;
-    }
-
-    @include onBigTabletAndUp {
-      font-size: $text-40;
-    }
-
-    @include onLaptopAndUp {
-      font-size: 1.6rem;
+      font-size: $text-32;
     }
   }
 
@@ -200,10 +175,6 @@
 
     @include onBigTabletAndUp {
       margin-top: 3rem;
-    }
-
-    @include onLaptopAndUp {
-      display: none;
     }
   }
 
@@ -241,6 +212,8 @@
 }
 
 .burger {
+  position: relative;
+
   width: 2.3rem;
   height: 2.3rem;
 
@@ -250,6 +223,28 @@
 
   border: 1px solid $colorPrimary;
   border-radius: 50%;
+
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: rgba($colorTextPrimary, 0.05);
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  &:hover {
+    transform: translateY(-1px) scale(1.03);
+
+    &::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 
   @include onTabletAndUp {
     width: 3rem;
@@ -281,10 +276,6 @@
         transform: rotate(-45deg);
       }
     }
-  }
-
-  @include onLaptopAndUp {
-    display: none;
   }
 
   &__wrapper {
