@@ -1,8 +1,11 @@
 import Swiper from 'swiper'
 import {Pagination, Navigation} from 'swiper/modules'
 
-export const initSwiper = () => {
-    new Swiper('.swiper', {
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+
+new Swiper('.swiper', {
     modules: [Pagination, Navigation],
     slidesPerView: 1,
     spaceBetween: 24,
@@ -37,4 +40,3 @@ export const initSwiper = () => {
         }
     },
 })
-}

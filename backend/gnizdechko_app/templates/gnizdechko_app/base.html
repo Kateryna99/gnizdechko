@@ -150,16 +150,18 @@
         </div>
 
         <div class="footer_bottom">
-            <p>© 2026 Gnizde.4ko</p>
+            <p>© 2026 Gnizde.4ko {{DEBUG}}</p>
         </div>
     </footer>
 </div>
 
-{% if debug %}
-  <script type="module" src="http://localhost:5173/src/js/index.js"></script>
-{% else %}
-  <script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
-{% endif %}
+
+<script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
+<!--{% if DEBUG %}-->
+<!--  <script type="module" src="http://localhost:5173/src/js/index.js"></script>-->
+<!--{% else %}-->
+<!--  <script type="module" src="{% vite_js 'src/js/index.js' %}"></script>-->
+<!--{% endif %}-->
 
 <div class="snackbar" id="snackbar" aria-live="polite" aria-atomic="true">
   <span class="snackbar__text" id="snackbarText"></span>

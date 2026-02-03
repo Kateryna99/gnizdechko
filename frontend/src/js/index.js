@@ -1,4 +1,4 @@
-import {initSwiper} from "./swiper/swiper.js";
+import './swiper/swiper.js'
 import {initBurgerMenu} from './burger/burger.js'
 import {initLoadMoreProducts} from "./utils/load-more.js";
 import {initProductGallery} from "./utils/init-product-gallery.js";
@@ -18,5 +18,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initAddToCart()
     initCartRemove()
     initCartQty()
-    initSwiper()
 });
