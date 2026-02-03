@@ -7,7 +7,7 @@ export default defineConfig(({ command }) => ({
     emptyOutDir: true,
     manifest: true,
     rollupOptions: {
-      input: '',
+      input: "./src/js/index.js",
     },
   },
 }))
