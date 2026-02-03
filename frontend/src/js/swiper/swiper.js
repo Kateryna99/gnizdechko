@@ -1,10 +1,6 @@
 import Swiper from 'swiper'
 import {Pagination, Navigation} from 'swiper/modules'
 
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
-
 export const initSwiper = () => {
     new Swiper('.swiper', {
     modules: [Pagination, Navigation],
