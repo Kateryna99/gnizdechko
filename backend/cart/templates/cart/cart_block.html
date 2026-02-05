@@ -6,7 +6,7 @@
         <span class="icon icon-close" data-cart-close></span>
     </div>
 
-    <div class="cart__flex">
+    <div class="cart__flex" data-cart-scope>
         {%for product in cart_items%}
         <div class="cart-product">
             <a href="{% url 'product-detail' product.product_id %}" class="cart-product__link">
