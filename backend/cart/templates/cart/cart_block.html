@@ -17,19 +17,6 @@
                 <div class="cart-product__block">
                     <h4 class="cart-product__title">{{ product.title }}</h4>
 
-                    {%if product.color_id%}
-                    <div class="cart-product__colors">
-                        <h5 class="cart-product__title">Колір:</h5>
-
-                        <span
-                                class="cart-product__color"
-                                style="background-color: {{ product.color_hex }};"
-                                aria-label="{{ product.color_name }}"
-                                title="{{ product.color_name }}"
-                        ></span>
-                    </div>
-                    {%endif%}
-
                     <div
                             class="amount-container amount-container--cart"
                             data-cart-key="{{ product.key }}"
@@ -80,7 +67,7 @@
         <div class="cart-total__actions">
             <button class="cart-total__close button" data-cart-close>Закрити</button>
 
-            <a href="{%url 'cart'%}" class="button button--plain cart-total__btn">Оформити замовлення</a>
+            <a href="{%url 'checkout'%}" class="button button--plain cart-total__btn">Оформити замовлення</a>
         </div>
     </div>
 </div>

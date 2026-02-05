@@ -3,7 +3,7 @@
 @use 'cart';
 
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   z-index: 10;
@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
 
-  border: 1px solid transparent;
+  border-bottom: 1px solid $backgroundPrimary;
 
   transition: border-color 0.3s ease;
 
@@ -22,7 +22,8 @@
 
   &::after {
     content: '';
-    position: fixed;
+    position: absolute;
+    height: calc(100% + 1px);
     inset: 0;
 
     display: block;
@@ -38,12 +39,12 @@
   &.is-active {
     &::after {
       opacity: 1;
-    pointer-events: auto;
+      pointer-events: auto;
     }
   }
 
   &--active {
-    border-color: $colorPrimary;
+    border-color: rgba(0, 0, 0, 0.4);
   }
 
   @include onTabletAndUp {

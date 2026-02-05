@@ -1,7 +1,7 @@
 {% extends "gnizdechko_app/base.html" %}
 {% load static %}
 {% block content %}
-<div class="hero">
+<section class="hero">
     <div class="hero__wrapper">
         <div class="hero__image">
             <img src="{%static 'images/hero/hero.jpg'%}" alt="Український святковий стіл">
@@ -13,10 +13,10 @@
             <h5 class="hero__subtitle">Душевна оздоба твоєї оселі "Gnizde.4ko"</h5>
         </div>
     </div>
-</div>
+</section>
 
 {%if has_new_products%}
-<div class="new-products products-list">
+<section class="new-products products-list">
     <div class="container">
         <div class="new-products__wrapper">
             <h2 class="new-products__title">Новинки</h2>
@@ -54,11 +54,11 @@
             <div class="swiper-pagination-new"></div>
         </div>
     </div>
-</div>
+</section>
 
 {%endif%}
 
-<div class="products-home">
+<section class="products-home">
     <div class="products-home__wrapper">
         <h2 class="products-home__title">Наші товари</h2>
         {%if all_categories%}
@@ -77,9 +77,9 @@
         </div>
         {%endif%}
     </div>
-</div>
+</section>
 
-<div class="features">
+<section class="features">
     <div class="container">
         <div class="features__wrapper">
             <h2 class="features__title">Наші переваги</h2>
@@ -117,9 +117,9 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="about-us">
+<section class="about-us">
     <div class="about-us__wrapper">
         <h2 class="about-us__title">Про нас</h2>
 
@@ -396,5 +396,5 @@
 
         <div class="swiper-pagination-about"></div>
     </div>
-</div>
+</section>
 {% endblock content %}

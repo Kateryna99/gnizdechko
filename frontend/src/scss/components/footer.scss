@@ -2,9 +2,7 @@
 @use '../abstracts/mixins' as *;
 
 .footer {
-  border-top: 2px dotted $colorAccent;
-
-  background: rgba(234, 223, 187, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
 
   &__wrapper {
     padding: 2rem 0;
@@ -121,7 +119,7 @@
 }
 
 .footer_bottom {
-  border-top: 1px solid $colorAccent;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
   padding: 2rem 0;
 
   display: flex;

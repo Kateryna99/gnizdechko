@@ -8,6 +8,8 @@ import {initColorPicker} from "./utils/init-color-picker.js";
 import {initAddToCart, initCartRemove} from "./utils/add-product.js";
 import {initCartQty} from "./utils/init-cart-qty.js";
 import {initHeaderScroll} from "./utils/init-header-scroll.js";
+import {initUiSelect} from "./utils/init-dropdown.js";
+import {initDeliveryStep1CountryToCarriers, initDeliveryStep3CityToWarehouses, initDeliveryStep4CarrierToCities } from "./utils/delivery.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     initBurgerMenu()
@@ -20,4 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initCartRemove()
     initCartQty()
     initHeaderScroll()
+    initUiSelect(document)
+    initDeliveryStep1CountryToCarriers()
+    initDeliveryStep4CarrierToCities()
+    initDeliveryStep3CityToWarehouses()
 });

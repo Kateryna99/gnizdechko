@@ -3,13 +3,13 @@
 
 .products {
   &__wrapper {
-    padding: 5.5rem 0 2rem;
+    padding: 1rem 0 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 
     @include onTabletAndUp {
-      padding: 6.5rem 0 2.5rem;
+      padding: 2rem 0 2.5rem;
     }
   }
 }

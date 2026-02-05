@@ -4,3 +4,4 @@ sqlparse==0.5.5
 gunicorn
 whitenoise
 Pillow
+python-dotenv

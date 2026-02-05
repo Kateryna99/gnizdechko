@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-se(cd*wivw(cn=yt!#h+n&4s01=ld5sb60txlgpwdv0@r%*091'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG") == "1"
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "gnizdechko_app.apps.GnizdechkoAppConfig",
     'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -132,5 +135,15 @@ MEDIA_URL = '/media/'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-VITE_DEV = True
-VITE_DEV_SERVER = "http://localhost:5173"
+VITE_DEV = os.getenv("VITE_DEV") == "1"
+VITE_DEV_SERVER = os.getenv("VITE_DEV_SERVER")
+
+######## TELEGRAM
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+
+
+########## NOVA POSHTA
+
+NOVA_POSHTA_API_KEY = os.getenv("NOVA_POSHTA_API_KEY")

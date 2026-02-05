@@ -7,9 +7,6 @@ from django.template.loader import render_to_string
 from gnizdechko_app.models import Product, Color
 from .utils import get_cart_summary
 
-def cart_page(request):
-    return render(request, 'cart/cart_page.html')
-
 @require_POST
 @csrf_protect
 def cart_add(request):

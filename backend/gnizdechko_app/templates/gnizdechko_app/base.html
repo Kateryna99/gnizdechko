@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Caveat:wght@400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Caveat:wght@400;500;600;700&family=Inter:wght@400;600;700&display=swap"
             rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -161,13 +161,13 @@
 
 
 {% if DEBUG %}
-  <script type="module" src="http://localhost:5173/src/js/index.js"></script>
+<script type="module" src="http://localhost:5173/src/js/index.js"></script>
 {% else %}
-  <script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
+<script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
 {% endif %}
 
 <script>
-  console.log('BASE HTML LOADED');
+    console.log('BASE HTML LOADED');
 </script>
 
 <div class="snackbar" id="snackbar" aria-live="polite" aria-atomic="true">

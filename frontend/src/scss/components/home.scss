@@ -6,16 +6,16 @@
   &__wrapper {
     position: relative;
 
-    padding: 4rem 0 1.5rem;
+    padding: 0 0 1.5rem;
 
     display: grid;
     grid-template-columns: minmax(320px, 1fr);
     gap: 1.5rem;
 
-    border-bottom: 2px dotted $colorAccent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 
     @include onTabletAndUp {
-      padding: 5rem 0 2rem;
+      padding: 0 0 2rem;
     }
 
     @include onLaptopAndUp {
@@ -33,7 +33,7 @@
         right: 0;
         width: calc(50% + 0.75rem);
 
-        border-bottom: 2px dotted $colorAccent;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
       }
     }
   }
@@ -44,7 +44,7 @@
 
     height: calc(100svh - 4rem);
 
-    border-bottom: 2px solid $colorAccent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 
     @include onTabletAndUp {
       height: calc(100svh - 5rem);
@@ -125,7 +125,7 @@
 /////////////NEW
 
 .new-products {
-  border-bottom: 2px dotted $colorAccent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 
   &__wrapper {
     padding: 1.5rem 0 3rem;
@@ -161,7 +161,7 @@
     flex-direction: column;
     gap: 1.5rem;
 
-    border-bottom: 2px dotted $colorAccent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 
     @include onLaptopAndUp {
       padding: 2rem 0 4rem;
@@ -180,7 +180,7 @@
   }
 
   @include onLaptopAndUp {
-    border-bottom: 2px dotted $colorAccent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   }
 }
 

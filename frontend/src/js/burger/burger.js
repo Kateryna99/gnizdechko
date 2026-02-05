@@ -15,8 +15,6 @@ const setState = (open) => {
     footer.classList.toggle('is-active', open)
 
     burger.setAttribute('aria-expanded', String(open))
-
-    document.body.style.overflow = open ? 'hidden' : ''
 }
 
 export const toggleBurgerMenu = () => {

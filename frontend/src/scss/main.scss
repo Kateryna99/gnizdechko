@@ -6,6 +6,7 @@
 @use 'components/products';
 @use 'components/product-detail';
 @use 'components/delivery-and-payment';
+@use 'components/checkout';
 
 *,
 *::before,
@@ -28,7 +29,7 @@ html {
 
 body {
   font-family: 'Cormorant', serif;
-  font-size: $text-18;
+  font-size: $text-16;
   font-weight: $fontWeightRegular;
   line-height: $lineHeightAdditional;
 
@@ -96,6 +97,7 @@ button {
   flex-direction: column;
 
   & > .main {
+    overflow: hidden;
     flex-grow: 1;
   }
 }
@@ -105,7 +107,7 @@ button {
 
   &::after {
     content: '';
-    position: fixed;
+    position: absolute;
     inset: 0;
 
     display: block;
@@ -121,7 +123,7 @@ button {
   &.is-active {
     &::after {
       opacity: 1;
-    pointer-events: auto;
+      pointer-events: auto;
     }
   }
 }
@@ -170,10 +172,8 @@ button {
   }
 
   &__text {
-    font-family: 'Caveat', cursive;
     font-size: $text-20;
     font-weight: 700;
-    color: #7B4A32;
 
     @include onTabletAndUp {
       font-size: $text-24;
@@ -346,7 +346,7 @@ button {
   height: 41px;
 
   border: 1px solid rgba($colorTextPrimary, 0.35);
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   overflow: hidden;
 
   font-size: 2rem;
@@ -428,4 +428,131 @@ button {
 .title {
   align-self: center;
   @include titleMain;
+}
+
+.ui-select {
+  position: relative;
+  width: 100%;
+
+  &--disabled {
+    opacity: 0.55;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &__trigger {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid rgba($colorTextPrimary, 0.16);
+    background: rgba(255, 255, 255, 0.35);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: $text-16;
+    font-weight: $fontWeightSemiBold;
+    color: $colorTextPrimary;
+
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: rgba($colorPrimary, 0.55);
+      box-shadow: 0 0 0 3px rgba($colorPrimary, 0.16);
+    }
+  }
+
+  &__arrow {
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid rgba($colorTextPrimary, 0.6);
+    border-bottom: 2px solid rgba($colorTextPrimary, 0.6);
+    transform: rotate(45deg);
+    transition: transform 160ms ease;
+    flex: 0 0 auto;
+  }
+
+  &.is-open &__arrow {
+    transform: rotate(-135deg);
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 50;
+
+    background: #fff;
+    border: 1px solid rgba($colorTextPrimary, 0.14);
+    border-radius: 0.3rem;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.08);
+
+    display: none;
+    overflow: hidden;
+  }
+
+  &.is-open &__dropdown {
+    display: block;
+  }
+
+  &__search {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba($colorTextPrimary, 0.10);
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  &__search-input {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border-radius: 0.3rem;
+
+    border: 1px solid rgba($colorTextPrimary, 0.14);
+    background: #fff;
+    color: $colorTextPrimary;
+
+    &:focus {
+      outline: none;
+      border-color: rgba($colorPrimary, 0.55);
+      box-shadow: 0 0 0 3px rgba($colorPrimary, 0.12);
+    }
+  }
+
+  &__list {
+    max-height: 320px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__option {
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+
+    font-size: $text-16;
+    color: $colorTextPrimary;
+
+    &:hover {
+      background: rgba($colorPrimary, 0.12);
+    }
+
+    &.is-selected {
+      background: rgba($colorPrimary, 0.25);
+      font-weight: $fontWeightBold;
+    }
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__empty {
+    padding: 0.7rem 1rem;
+    color: rgba($colorTextPrimary, 0.7);
+
+    &[hidden] {
+      display: none;
+    }
+  }
 }

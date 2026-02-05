@@ -1,0 +1,14 @@
+.env
+db.sqlite3
+
+media/
+staticfiles/
+node_modules/
+backend/static/dist/
+
+__pycache__/
+*.pyc
+
+.idea
+.vscode
+.DS_Store

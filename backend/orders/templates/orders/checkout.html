@@ -1,0 +1,457 @@
+{% extends "gnizdechko_app/base.html" %}
+{% load static %}
+{% block content %}
+<section class="checkout">
+    <div class="container">
+        <div class="checkout__wrapper">
+            <div class="checkout__grid">
+
+                <div class="checkout__left">
+                    <h1 class="checkout__title">Ваші дані</h1>
+
+                    <form class="checkout-form" id="checkout-form" method="post" action="{% url 'checkout-send' %}"
+                          novalidate>
+                        {% csrf_token %}
+
+                        <div class="checkout-form__grid">
+                            <div class="checkout-form__field">
+                                <label class="checkout-form__label" for="first_name">
+                                    Імʼя <span class="checkout-form__req">*</span>
+                                </label>
+                                <input
+                                        class="checkout-form__input"
+                                        id="first_name"
+                                        name="first_name"
+                                        type="text"
+                                        autocomplete="given-name"
+                                        required
+                                >
+                                <p class="checkout-form__error" data-error-for="first_name" hidden>Заповніть поле</p>
+                            </div>
+
+                            <div class="checkout-form__field">
+                                <label class="checkout-form__label" for="last_name">
+                                    Прізвище <span class="checkout-form__req">*</span>
+                                </label>
+                                <input
+                                        class="checkout-form__input"
+                                        id="last_name"
+                                        name="last_name"
+                                        type="text"
+                                        autocomplete="family-name"
+                                        required
+                                >
+                                <p class="checkout-form__error" data-error-for="last_name" hidden>Заповніть поле</p>
+                            </div>
+
+                            <div class="checkout-form__field checkout-form__field--full">
+                                <label class="checkout-form__label">
+                                    Країна <span class="checkout-form__req">*</span>
+                                </label>
+
+                                <div
+                                        class="ui-select"
+                                        data-select="country"
+                                        data-country-select
+                                >
+                                    <input
+                                            type="hidden"
+                                            name="country"
+                                            value="UA"
+                                            required
+                                            data-hidden
+                                    >
+
+                                    <button
+                                            class="ui-select__trigger"
+                                            type="button"
+                                            aria-expanded="false"
+                                            aria-haspopup="listbox"
+                                    >
+      <span
+              class="ui-select__value"
+              data-placeholder
+      >
+        Україна
+      </span>
+                                        <span class="ui-select__arrow" aria-hidden="true"></span>
+                                    </button>
+
+                                    <div class="ui-select__dropdown" role="listbox">
+                                        <div class="ui-select__search">
+                                            <input
+                                                    class="ui-select__search-input"
+                                                    type="text"
+                                                    placeholder="Пошук країни…"
+                                                    autocomplete="off"
+                                            >
+                                        </div>
+
+                                        <div class="ui-select__list" data-options>
+                                            {% for code, name in countries %}
+                                            <div
+                                                    class="ui-select__option {% if code == 'UA' %}is-selected{% endif %}"
+                                                    data-value="{{ code }}"
+                                                    role="option"
+                                                    aria-selected="{% if code == 'UA' %}true{% else %}false{% endif %}"
+                                            >
+                                                {{ name }}
+                                            </div>
+                                            {% endfor %}
+
+                                            <div class="ui-select__empty" hidden>
+                                                Нічого не знайдено
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p
+                                        class="checkout-form__error"
+                                        data-error-for="country"
+                                        hidden
+                                >
+                                    Оберіть країну
+                                </p>
+                            </div>
+
+                            <div class="checkout-form__field">
+                                <label class="checkout-form__label" for="phone">
+                                    Телефон <span class="checkout-form__req">*</span>
+                                </label>
+                                <input
+                                        class="checkout-form__input"
+                                        id="phone"
+                                        name="phone"
+                                        type="tel"
+                                        autocomplete="tel"
+                                        inputmode="tel"
+                                        required
+                                >
+                                <p class="checkout-form__error" data-error-for="phone" hidden>Заповніть поле</p>
+                            </div>
+
+                            <div class="checkout-form__field">
+                                <label class="checkout-form__label" for="email">
+                                    E-mail адреса <span class="checkout-form__req">*</span>
+                                </label>
+                                <input
+                                        class="checkout-form__input"
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        autocomplete="email"
+                                        required
+                                >
+                                <p class="checkout-form__error" data-error-for="email" hidden>Вкажіть коректний
+                                    e-mail</p>
+                            </div>
+                        </div>
+
+                        <section
+                                class="delivery"
+                                data-delivery
+                                data-url-carriers="{% url 'delivery-carriers' %}"
+                                data-url-cities="{% url 'delivery-cities' %}"
+                                data-url-warehouses="{% url 'delivery-warehouses' %}"
+                        >
+                            <h2 class="delivery__title">Доставка</h2>
+
+
+                            <div data-delivery-ua>
+                                <div
+                                        class="delivery__carriers delivery__carriers--disabled"
+                                        data-carriers
+                                        aria-disabled="true"
+                                        data-icon-np="{% static 'images/icons/nova-poshta.svg' %}"
+                                        data-icon-up="{% static 'images/icons/ukrposhta.svg' %}"
+                                >
+                                    <label class="delivery-carrier">
+                                        <input
+                                                class="delivery-carrier__radio"
+                                                type="radio"
+                                                name="delivery_carrier"
+                                                value="np"
+                                        >
+                                        <span class="delivery-carrier__control" aria-hidden="true"></span>
+                                        <span class="delivery-carrier__icon" aria-hidden="true">
+        <img src="{% static 'images/icons/nova-poshta.svg' %}" alt="Нова Пошта">
+      </span>
+                                        <span class="delivery-carrier__text">Нова Пошта</span>
+                                    </label>
+                                </div>
+
+                                <div class="delivery__field">
+                                    <label class="delivery__label">
+                                        Місто <span class="delivery__req">*</span>
+                                    </label>
+
+                                    <div
+                                            class="ui-select ui-select--disabled"
+                                            data-select="city"
+                                            data-city-select
+                                            data-disabled="true"
+                                    >
+                                        <button
+                                                type="button"
+                                                class="ui-select__trigger"
+                                                aria-expanded="false"
+                                                disabled
+                                                data-trigger
+                                        >
+        <span class="ui-select__value" data-placeholder>
+          Оберіть місто
+        </span>
+                                            <span class="ui-select__arrow" aria-hidden="true"></span>
+                                        </button>
+
+                                        <div class="ui-select__dropdown">
+                                            <div class="ui-select__search">
+                                                <input
+                                                        type="text"
+                                                        class="ui-select__search-input"
+                                                        placeholder="Пошук міста"
+                                                        autocomplete="off"
+                                                        disabled
+                                                        data-search
+                                                >
+                                            </div>
+
+                                            <div class="ui-select__list" data-options>
+                                                <div class="ui-select__empty" data-empty>
+                                                    Спочатку оберіть службу доставки
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <input
+                                                type="hidden"
+                                                name="delivery_city"
+                                                required
+                                                data-hidden
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="delivery__field">
+                                    <label class="delivery__label">
+                                        Відділення <span class="delivery__req">*</span>
+                                    </label>
+
+                                    <div
+                                            class="ui-select ui-select--disabled"
+                                            data-select="warehouse"
+                                            data-warehouse-select
+                                            data-disabled="true"
+                                    >
+                                        <button
+                                                type="button"
+                                                class="ui-select__trigger"
+                                                aria-expanded="false"
+                                                disabled
+                                                data-trigger
+                                        >
+        <span class="ui-select__value" data-placeholder>
+          Оберіть відділення
+        </span>
+                                            <span class="ui-select__arrow" aria-hidden="true"></span>
+                                        </button>
+
+                                        <div class="ui-select__dropdown">
+                                            <div class="ui-select__search">
+                                                <input
+                                                        type="text"
+                                                        class="ui-select__search-input"
+                                                        placeholder="Пошук відділення"
+                                                        autocomplete="off"
+                                                        disabled
+                                                        data-search
+                                                >
+                                            </div>
+
+                                            <div class="ui-select__list" data-options>
+                                                <div class="ui-select__empty" data-empty>
+                                                    Спочатку оберіть місто
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <input
+                                                type="hidden"
+                                                name="delivery_warehouse"
+                                                required
+                                                data-hidden
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="checkout-form__intl" data-delivery-intl hidden>
+                                <div class="checkout-form__field">
+                                    <label class="checkout-form__label" for="intl_city">
+                                        Місто <span class="checkout-form__req">*</span>
+                                    </label>
+                                    <input
+                                            class="checkout-form__input"
+                                            id="intl_city"
+                                            name="intl_city"
+                                            type="text"
+                                            autocomplete="address-level2"
+                                            required
+                                    >
+                                    <p class="checkout-form__error" data-error-for="intl_city" hidden>Заповніть поле</p>
+                                </div>
+
+                                <div class="checkout-form__field">
+                                    <label class="checkout-form__label" for="intl_postcode">
+                                        Поштовий індекс <span class="checkout-form__req">*</span>
+                                    </label>
+                                    <input
+                                            class="checkout-form__input"
+                                            id="intl_postcode"
+                                            name="intl_postcode"
+                                            type="text"
+                                            autocomplete="postal-code"
+                                            required
+                                    >
+                                    <p class="checkout-form__error" data-error-for="intl_postcode" hidden>Заповніть
+                                        поле</p>
+                                </div>
+
+                                <div class="checkout-form__field">
+                                    <label class="checkout-form__label" for="intl_street">
+                                        Вулиця, будинок, кв. <span class="checkout-form__req">*</span>
+                                    </label>
+                                    <input
+                                            class="checkout-form__input"
+                                            id="intl_street"
+                                            name="intl_street"
+                                            type="text"
+                                            autocomplete="street-address"
+                                            required
+                                    >
+                                    <p class="checkout-form__error" data-error-for="intl_street" hidden>Заповніть
+                                        поле</p>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+
+                <aside class="checkout__right">
+                    <div class="order-summary">
+                        <h2 class="order-summary__title">Ваше замовлення</h2>
+
+                        <div class="order-summary__items">
+                            {%for product in cart_items%}
+                            <div class="cart-product cart-product--padding">
+                                <a href="{% url 'product-detail' product.product_id %}" class="cart-product__link">
+                                    <div class="cart-product__image">
+                                        <img src="{{ product.image }}" alt="{{ product.title }}">
+                                    </div>
+
+                                    <div class="cart-product__block">
+                                        <h4 class="cart-product__title">{{ product.title }}</h4>
+
+                                        {%if product.color_id%}
+                                        <div class="cart-product__colors">
+                                            <h5 class="cart-product__title">Колір:</h5>
+
+                                            <span
+                                                    class="cart-product__color"
+                                                    style="background-color: {{ product.color_hex }};"
+                                                    aria-label="{{ product.color_name }}"
+                                                    title="{{ product.color_name }}"
+                                            ></span>
+                                        </div>
+                                        {%endif%}
+
+                                        <div
+                                                class="amount-container amount-container--cart"
+                                                data-cart-key="{{ product.key }}"
+                                        >
+                                            <button
+                                                    type="button"
+                                                    class="amount-container__button amount-container__button--cart"
+                                                    data-action="decrease">
+                                                <span>-</span>
+                                            </button>
+                                            <p class="amount-container__value amount-container__value--cart">
+                                                <span data-cart-amount>{{ product.qty }}</span>
+                                            </p>
+                                            <button
+                                                    type="button"
+                                                    class="amount-container__button amount-container__button--cart"
+                                                    data-action="increase">
+                                                <span>+</span>
+                                            </button>
+                                        </div>
+
+                                        <p class="cart-product__info">
+                                            <span class="cart-product__quantity"
+                                                  data-cart-qty-label>{{ product.qty }} x </span>
+                                            {{ product.price }}₴
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <button
+                                        type="button"
+                                        class="cart-product__delete"
+                                        data-cart-key="{{ product.key }}"
+                                        aria-label="Видалити товар"
+                                >
+                                    <span class="cart-product__icon icon icon-close"></span>
+                                </button>
+                            </div>
+                            {%endfor%}
+                        </div>
+
+                        <div class="order-summary__totals">
+                            <div class="order-summary__row order-summary__row--grand">
+                                <span class="order-summary__label">Загалом</span>
+                                <span class="order-summary__value" data-cart-total>{{cart_total_sum}}₴</span>
+                            </div>
+                        </div>
+
+                        <div class="order-summary__payment payment">
+                            <label class="payment__option">
+                                <input
+                                        type="radio"
+                                        name="payment_method"
+                                        value="card"
+                                        checked
+                                        aria-checked="true"
+                                >
+                                <span class="payment__control" aria-hidden="true"></span>
+
+                                <div class="payment__content">
+      <span class="payment__text">
+        Онлайн оплата карткою (Visa, Mastercard), Apple Pay, Google Pay
+      </span>
+                                    <div class="payment__hint">
+                                        Безпечна онлайн оплата
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="order-summary__actions">
+                            <button class="order-summary__submit button button--plain" type="submit" form="checkout-form">
+                                Перейти до оплати <span class="order-summary__submit-sum"
+                                                        data-cart-total-inline>{{cart_total_sum}}₴</span>
+                            </button>
+
+                            <p class="order-summary__terms">
+                                Натискаючи на кнопку «Підтвердити замовлення» ви автоматично погоджуєтесь з умовами
+                                оплати та доставки
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
