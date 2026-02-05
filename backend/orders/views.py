@@ -1,12 +1,14 @@
 import requests
 from django.conf import settings
 from django.shortcuts import render, redirect
-from django.views.decorators.http import require_http_methods,require_GET
+from django.views.decorators.http import require_http_methods, require_GET
 from django.http import JsonResponse
 from django.contrib import messages
 from .constants import COUNTRIES
 from .services.novaposhta import np_get_cities, np_get_warehouses
 from cart.utils import get_cart_summary
+from .forms import CheckoutForm
+
 
 # Create your views here.
 def checkout(request):
@@ -16,11 +18,14 @@ def checkout(request):
 
     return render(request, "orders/checkout.html", context)
 
+
 def ok(items):
     return JsonResponse({"ok": True, "items": items, "error": None})
 
+
 def fail(message, status=400):
     return JsonResponse({"ok": False, "items": [], "error": message}, status=status)
+
 
 @require_GET
 def delivery_carriers(request):
@@ -93,41 +98,68 @@ def _tg_send(text: str) -> None:
 
 @require_http_methods(["GET", "POST"])
 def checkout_telegram(request):
-    if request.method == "GET":
-        return render(request, "orders/checkout.html")
-
     cart = request.session.get("cart", {"items": {}})
     ctx = get_cart_summary(cart)
 
-    if not ctx["cart_items"]:
-        return redirect("checkout")
+    if request.method == "GET":
+        return render(request, "orders/checkout.html", {**ctx, "form": CheckoutForm()})
 
-    lines = [
-        "🧺 НОВЕ ЗАМОВЛЕННЯ",
-        "",
-        "📦 ТОВАРИ:"
-    ]
+    else:
+        form = CheckoutForm(request.POST)
 
-    for i, item in enumerate(ctx["cart_items"], start=1):
-        color = (
-            f"\n   🎨 Колір: {item['color_name']}"
-            if item.get("color_name")
-            else ""
-        )
+        if not form.is_valid():
+            print("FORM ERRORS:", form.errors)
+            print("POST:", request.POST)
+            return render(request, "orders/checkout.html", {**ctx, "form": form})
 
-        lines.append(
-            f"{i}. {item['title']}"
-            f"{color}\n"
-            f"   🔢 Кількість: {item['qty']}\n"
-            f"   💰 Ціна: {item['price']}₴\n"
-            f"   🧾 Сума: {item['total']}₴"
-        )
+        cd = form.cleaned_data
 
-    lines.extend([
-        "",
-        f"🧮 ЗАГАЛОМ: {ctx['cart_total_sum']}₴",
-    ])
+        lines = [
+            "🧺 НОВЕ ЗАМОВЛЕННЯ",
+            "",
+            "👤 КЛІЄНТ:",
+            f"   🧍 Імʼя: {cd['first_name']} {cd['last_name']}",
+            f"   📞 Телефон: {cd['phone']}",
+            f"   ✉️ Email: {cd['email']}",
+            f"   🌍 Країна: {cd['country']}",
+            "",
+            "🚚 ДОСТАВКА:",
+        ]
 
-    _tg_send("\n".join(lines))
+        if cd["country"] == "UA":
+            lines.extend([
+                f"   🏙 Місто: {cd.get('delivery_city_name') or cd.get('delivery_city')}",
+                f"   🏤 Відділення: {cd.get('delivery_warehouse_name') or cd.get('delivery_warehouse')}",
+            ])
+        else:
+            lines.extend([
+                f"   🏙 Місто: {cd.get('intl_city')}",
+                f"   📮 Індекс: {cd.get('intl_postcode')}",
+                f"   🏠 Адреса: {cd.get('intl_street')}",
+            ])
 
-    return redirect("checkout")
+        lines.extend([
+            "",
+            "📦 ТОВАРИ:",
+        ])
+
+        for i, item in enumerate(ctx["cart_items"], start=1):
+            color = f"\n   🎨 Колір: {item['color_name']}" if item.get("color_name") else ""
+            lines.append(
+                f"{i}. {item['title']}"
+                f"{color}\n"
+                f"   🔢 Кількість: {item['qty']}\n"
+                f"   💰 Ціна: {item['price']}₴\n"
+                f"   🧾 Сума: {item['total']}₴"
+            )
+
+        lines.extend([
+            "",
+            f"🧮 ЗАГАЛОМ: {ctx['cart_total_sum']}₴",
+        ])
+
+        _tg_send("\n".join(lines))
+
+        request.session["cart"] = {"items": {}}
+        request.session.modified = True
+        return redirect("home")

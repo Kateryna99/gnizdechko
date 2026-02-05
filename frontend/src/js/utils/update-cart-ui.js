@@ -16,8 +16,9 @@ export const updateCartUI = (data) => {
     badge?.remove();
   }
 
-  const totalEl = document.querySelector('[data-cart-total]');
-  if (totalEl) totalEl.textContent = data?.cart_total_sum+'₴';
+  document.querySelectorAll('[data-cart-total]').forEach((el) => {
+    el.textContent = `${data?.cart_total_sum ?? 0}₴`;
+  });
 };
 
 export const updateCartBlock = (data) => {

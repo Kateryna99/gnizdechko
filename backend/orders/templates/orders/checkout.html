@@ -1,11 +1,11 @@
 {% extends "gnizdechko_app/base.html" %}
 {% load static %}
 {% block content %}
-<section class="checkout">
+<section class="checkout" data-page="checkout">
     <div class="container">
         <div class="checkout__wrapper">
+            {%if cart_total_qty%}
             <div class="checkout__grid">
-
                 <div class="checkout__left">
                     <h1 class="checkout__title">Ваші дані</h1>
 
@@ -23,10 +23,17 @@
                                         id="first_name"
                                         name="first_name"
                                         type="text"
+                                        value="{{ form.first_name.value|default_if_none:'' }}"
                                         autocomplete="given-name"
                                         required
                                 >
+                                {% if form.first_name.errors %}
+                                <p class="checkout-form__error">
+                                    {{ form.first_name.errors.0 }}
+                                </p>
+                                {% else %}
                                 <p class="checkout-form__error" data-error-for="first_name" hidden>Заповніть поле</p>
+                                {% endif %}
                             </div>
 
                             <div class="checkout-form__field">
@@ -39,9 +46,16 @@
                                         name="last_name"
                                         type="text"
                                         autocomplete="family-name"
+                                        value="{{ form.last_name.value|default_if_none:'' }}"
                                         required
                                 >
+                                {% if form.last_name.errors %}
+                                <p class="checkout-form__error">
+                                    {{ form.last_name.errors.0 }}
+                                </p>
+                                {% else %}
                                 <p class="checkout-form__error" data-error-for="last_name" hidden>Заповніть поле</p>
+                                {% endif %}
                             </div>
 
                             <div class="checkout-form__field checkout-form__field--full">
@@ -126,9 +140,16 @@
                                         type="tel"
                                         autocomplete="tel"
                                         inputmode="tel"
+                                        value="{{ form.phone.value|default_if_none:'' }}"
                                         required
                                 >
+                                {% if form.phone.errors %}
+                                <p class="checkout-form__error">
+                                    {{ form.phone.errors.0 }}
+                                </p>
+                                {% else %}
                                 <p class="checkout-form__error" data-error-for="phone" hidden>Заповніть поле</p>
+                                {% endif %}
                             </div>
 
                             <div class="checkout-form__field">
@@ -141,10 +162,16 @@
                                         name="email"
                                         type="email"
                                         autocomplete="email"
+                                        value="{{ form.email.value|default_if_none:'' }}"
                                         required
                                 >
-                                <p class="checkout-form__error" data-error-for="email" hidden>Вкажіть коректний
-                                    e-mail</p>
+                                {% if form.email.errors %}
+                                <p class="checkout-form__error">
+                                    {{ form.email.errors.0 }}
+                                </p>
+                                {% else %}
+                                <p class="checkout-form__error" data-error-for="email" hidden>Заповніть поле</p>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -157,14 +184,14 @@
                         >
                             <h2 class="delivery__title">Доставка</h2>
 
-
                             <div data-delivery-ua>
+                                <input type="hidden" name="delivery_city_name" id="delivery_city_name">
+                                <input type="hidden" name="delivery_warehouse_name" id="delivery_warehouse_name">
                                 <div
                                         class="delivery__carriers delivery__carriers--disabled"
                                         data-carriers
                                         aria-disabled="true"
                                         data-icon-np="{% static 'images/icons/nova-poshta.svg' %}"
-                                        data-icon-up="{% static 'images/icons/ukrposhta.svg' %}"
                                 >
                                     <label class="delivery-carrier">
                                         <input
@@ -175,8 +202,8 @@
                                         >
                                         <span class="delivery-carrier__control" aria-hidden="true"></span>
                                         <span class="delivery-carrier__icon" aria-hidden="true">
-        <img src="{% static 'images/icons/nova-poshta.svg' %}" alt="Нова Пошта">
-      </span>
+          <img src="{% static 'images/icons/nova-poshta.svg' %}" alt="Нова Пошта">
+        </span>
                                         <span class="delivery-carrier__text">Нова Пошта</span>
                                     </label>
                                 </div>
@@ -187,7 +214,7 @@
                                     </label>
 
                                     <div
-                                            class="ui-select ui-select--disabled"
+                                            class="ui-select ui-select--disabled {% if form.delivery_city.errors %}is-invalid{% endif %}"
                                             data-select="city"
                                             data-city-select
                                             data-disabled="true"
@@ -199,9 +226,13 @@
                                                 disabled
                                                 data-trigger
                                         >
-        <span class="ui-select__value" data-placeholder>
-          Оберіть місто
-        </span>
+          <span class="ui-select__value" data-placeholder>
+  {% if form.delivery_city_name.value %}
+    {{ form.delivery_city_name.value }}
+  {% else %}
+    Оберіть місто
+  {% endif %}
+</span>
                                             <span class="ui-select__arrow" aria-hidden="true"></span>
                                         </button>
 
@@ -229,8 +260,16 @@
                                                 name="delivery_city"
                                                 required
                                                 data-hidden
+                                                value="{{ form.delivery_city.value|default_if_none:'' }}"
                                         >
                                     </div>
+
+                                    {% if form.delivery_city.errors %}
+                                    <p class="checkout-form__error">{{ form.delivery_city.errors.0 }}</p>
+                                    {% else %}
+                                    <p class="checkout-form__error" data-error-for="delivery_city" hidden>Заповніть
+                                        поле</p>
+                                    {% endif %}
                                 </div>
 
                                 <div class="delivery__field">
@@ -239,7 +278,7 @@
                                     </label>
 
                                     <div
-                                            class="ui-select ui-select--disabled"
+                                            class="ui-select ui-select--disabled {% if form.delivery_warehouse.errors %}is-invalid{% endif %}"
                                             data-select="warehouse"
                                             data-warehouse-select
                                             data-disabled="true"
@@ -251,9 +290,15 @@
                                                 disabled
                                                 data-trigger
                                         >
-        <span class="ui-select__value" data-placeholder>
-          Оберіть відділення
-        </span>
+          <span class="ui-select__value" data-placeholder>
+            <span class="ui-select__value" data-placeholder>
+  {% if form.delivery_warehouse_name.value %}
+    {{ form.delivery_warehouse_name.value }}
+  {% else %}
+    Оберіть відділення
+  {% endif %}
+</span>
+          </span>
                                             <span class="ui-select__arrow" aria-hidden="true"></span>
                                         </button>
 
@@ -281,8 +326,16 @@
                                                 name="delivery_warehouse"
                                                 required
                                                 data-hidden
+                                                value="{{ form.delivery_warehouse.value|default_if_none:'' }}"
                                         >
                                     </div>
+
+                                    {% if form.delivery_warehouse.errors %}
+                                    <p class="checkout-form__error">{{ form.delivery_warehouse.errors.0 }}</p>
+                                    {% else %}
+                                    <p class="checkout-form__error" data-error-for="delivery_warehouse" hidden>Заповніть
+                                        поле</p>
+                                    {% endif %}
                                 </div>
                             </div>
 
@@ -291,47 +344,68 @@
                                     <label class="checkout-form__label" for="intl_city">
                                         Місто <span class="checkout-form__req">*</span>
                                     </label>
+
                                     <input
-                                            class="checkout-form__input"
+                                            class="checkout-form__input {% if form.intl_city.errors %}is-invalid{% endif %}"
                                             id="intl_city"
                                             name="intl_city"
                                             type="text"
                                             autocomplete="address-level2"
                                             required
+                                            value="{{ form.intl_city.value|default_if_none:'' }}"
                                     >
+
+                                    {% if form.intl_city.errors %}
+                                    <p class="checkout-form__error">{{ form.intl_city.errors.0 }}</p>
+                                    {% else %}
                                     <p class="checkout-form__error" data-error-for="intl_city" hidden>Заповніть поле</p>
+                                    {% endif %}
                                 </div>
 
                                 <div class="checkout-form__field">
                                     <label class="checkout-form__label" for="intl_postcode">
                                         Поштовий індекс <span class="checkout-form__req">*</span>
                                     </label>
+
                                     <input
-                                            class="checkout-form__input"
+                                            class="checkout-form__input {% if form.intl_postcode.errors %}is-invalid{% endif %}"
                                             id="intl_postcode"
                                             name="intl_postcode"
                                             type="text"
                                             autocomplete="postal-code"
                                             required
+                                            value="{{ form.intl_postcode.value|default_if_none:'' }}"
                                     >
+
+                                    {% if form.intl_postcode.errors %}
+                                    <p class="checkout-form__error">{{ form.intl_postcode.errors.0 }}</p>
+                                    {% else %}
                                     <p class="checkout-form__error" data-error-for="intl_postcode" hidden>Заповніть
                                         поле</p>
+                                    {% endif %}
                                 </div>
 
                                 <div class="checkout-form__field">
                                     <label class="checkout-form__label" for="intl_street">
                                         Вулиця, будинок, кв. <span class="checkout-form__req">*</span>
                                     </label>
+
                                     <input
-                                            class="checkout-form__input"
+                                            class="checkout-form__input {% if form.intl_street.errors %}is-invalid{% endif %}"
                                             id="intl_street"
                                             name="intl_street"
                                             type="text"
                                             autocomplete="street-address"
                                             required
+                                            value="{{ form.intl_street.value|default_if_none:'' }}"
                                     >
+
+                                    {% if form.intl_street.errors %}
+                                    <p class="checkout-form__error">{{ form.intl_street.errors.0 }}</p>
+                                    {% else %}
                                     <p class="checkout-form__error" data-error-for="intl_street" hidden>Заповніть
                                         поле</p>
+                                    {% endif %}
                                 </div>
                             </div>
                         </section>
@@ -342,7 +416,7 @@
                     <div class="order-summary">
                         <h2 class="order-summary__title">Ваше замовлення</h2>
 
-                        <div class="order-summary__items">
+                        <div class="order-summary__items" data-cart-scope>
                             {%for product in cart_items%}
                             <div class="cart-product cart-product--padding">
                                 <a href="{% url 'product-detail' product.product_id %}" class="cart-product__link">
@@ -437,7 +511,8 @@
                         </div>
 
                         <div class="order-summary__actions">
-                            <button class="order-summary__submit button button--plain" type="submit" form="checkout-form">
+                            <button class="order-summary__submit button button--plain" type="submit"
+                                    form="checkout-form">
                                 Перейти до оплати <span class="order-summary__submit-sum"
                                                         data-cart-total-inline>{{cart_total_sum}}₴</span>
                             </button>
@@ -451,6 +526,13 @@
                 </aside>
 
             </div>
+            {%else%}
+            <div class="checkout__empty">
+                <p class='checkout__empty-text'>Ваш кошик поки що пустий</p>
+
+                <a href="{%url 'home'%}" class="button button--plain">На головну</a>
+            </div>
+            {%endif%}
         </div>
     </div>
 </section>

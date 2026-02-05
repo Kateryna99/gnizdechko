@@ -33,6 +33,7 @@
     @include onTabletAndUp {
       grid-template-columns: repeat(2, minmax(300px, 1fr));
       gap: 2.5rem;
+      align-items: start;
     }
   }
 
@@ -118,6 +119,11 @@
 
     @include onTabletAndUp {
       gap: 2.3rem;
+
+      position: sticky;
+      top: 5rem;
+      align-self: start;
+      height: fit-content;
     }
   }
 }

@@ -121,15 +121,20 @@ export const setUiSelectDisabled = (selectEl, disabled, placeholderText, emptyTe
   if (trigger) trigger.disabled = Boolean(disabled)
   if (search) search.disabled = Boolean(disabled)
 
-  if (hidden) hidden.value = ''
-  if (valueEl && placeholderText) valueEl.textContent = placeholderText
+  if (Boolean(disabled)) {
+    if (hidden) hidden.value = ''
+    if (valueEl && placeholderText) valueEl.textContent = placeholderText
 
-  if (list) list.querySelectorAll('.ui-select__option').forEach(o => o.remove())
-  else selectEl.querySelectorAll('.ui-select__option').forEach(o => o.remove())
+    if (list) list.querySelectorAll('.ui-select__option').forEach(o => o.remove())
+    else selectEl.querySelectorAll('.ui-select__option').forEach(o => o.remove())
 
-  if (emptyEl) {
-    emptyEl.hidden = false
-    if (emptyText) emptyEl.textContent = emptyText
+    if (emptyEl) {
+      emptyEl.hidden = false
+      if (emptyText) emptyEl.textContent = emptyText
+    }
+  } else {
+    if (valueEl && placeholderText) valueEl.textContent = placeholderText
+    if (emptyEl && emptyText) emptyEl.textContent = emptyText
   }
 }
 
