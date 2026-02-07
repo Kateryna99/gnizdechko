@@ -1,9 +1,8 @@
 import requests
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views.decorators.http import require_http_methods, require_GET
 from django.http import JsonResponse
-from django.contrib import messages
 from .constants import COUNTRIES
 from .services.novaposhta import np_get_cities, np_get_warehouses
 from cart.utils import get_cart_summary
@@ -110,6 +109,9 @@ def checkout_telegram(request):
         if not form.is_valid():
             print("FORM ERRORS:", form.errors)
             print("POST:", request.POST)
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return JsonResponse({"ok": False, "errors": form.errors}, status=400)
+
             return render(request, "orders/checkout.html", {**ctx, "form": form})
 
         cd = form.cleaned_data
@@ -121,7 +123,7 @@ def checkout_telegram(request):
             f"   🧍 Імʼя: {cd['first_name']} {cd['last_name']}",
             f"   📞 Телефон: {cd['phone']}",
             f"   ✉️ Email: {cd['email']}",
-            f"   🌍 Країна: {cd['country']}",
+            f"   🌍 Країна: {cd['country'] + '/' + cd['country_name']}",
             "",
             "🚚 ДОСТАВКА:",
         ]
@@ -162,4 +164,8 @@ def checkout_telegram(request):
 
         request.session["cart"] = {"items": {}}
         request.session.modified = True
+
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return JsonResponse({"ok": True, "redirect": reverse("home")})
+
         return redirect("home")

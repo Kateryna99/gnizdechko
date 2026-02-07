@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: gnizdechko_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gnizdechko
+      POSTGRES_USER: gnizdechko
+      POSTGRES_PASSWORD: gnizdechko_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

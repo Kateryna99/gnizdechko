@@ -37,6 +37,7 @@ const getEndpoints = (deliveryEl) => ({
 const getCountry = (deliveryEl, root = document) => {
     const countrySelect =
         qs(deliveryEl, '[data-country-select]') || qs(root, '[data-country-select]')
+
     return countrySelect?.querySelector('input[type="hidden"]')?.value || 'UA'
 }
 
@@ -110,6 +111,12 @@ export const initDeliveryStep1CountryToCarriers = (root = document) => {
 
     if (!countrySelect || !carriersEl) return
 
+    const countryNameHidden = root.querySelector('#country_name')
+
+    const setCountryName = (text = '') => {
+        if (countryNameHidden) countryNameHidden.value = text
+    }
+
     const resetCityWarehouse = (cityText, whText) => {
         setUiSelectDisabled(citySelect, true, cityText, cityText)
         setUiSelectDisabled(warehouseSelect, true, whText, whText)
@@ -168,112 +175,117 @@ export const initDeliveryStep1CountryToCarriers = (root = document) => {
     }
 
     const initialCountry = getCountry(deliveryEl, root)
+    setCountryName(countrySelect.querySelector('.ui-select__value')?.textContent?.trim() || '')
+
     applyCountryState(initialCountry)
 
     countrySelect.addEventListener('ui-select:change', (e) => {
         const country = e.detail?.value || ''
         if (!country) return
+
+        setCountryName(e.detail?.text || '')
+
         applyCountryState(country)
     })
 }
 
 const bindCityToWarehouses = (deliveryEl, root = document) => {
-  const endpoints = getEndpoints(deliveryEl)
+    const endpoints = getEndpoints(deliveryEl)
 
-  const carriersEl = qs(deliveryEl, '[data-carriers]')
-  const citySelect = qs(deliveryEl, '[data-city-select]')
-  const warehouseSelect = qs(deliveryEl, '[data-warehouse-select]')
-  if (!carriersEl || !citySelect || !warehouseSelect) return
+    const carriersEl = qs(deliveryEl, '[data-carriers]')
+    const citySelect = qs(deliveryEl, '[data-city-select]')
+    const warehouseSelect = qs(deliveryEl, '[data-warehouse-select]')
+    if (!carriersEl || !citySelect || !warehouseSelect) return
 
-  const cityNameHidden = qs(deliveryEl, '#delivery_city_name')
-  const whNameHidden = qs(deliveryEl, '#delivery_warehouse_name')
+    const cityNameHidden = qs(deliveryEl, '#delivery_city_name')
+    const whNameHidden = qs(deliveryEl, '#delivery_warehouse_name')
 
-  const setCityName = (text = '') => {
-    if (cityNameHidden) cityNameHidden.value = text
-  }
-
-  const setWarehouseName = (text = '') => {
-    if (whNameHidden) whNameHidden.value = text
-  }
-
-  const loadWarehouses = async ({ country, carrier, cityId, q = '' }) => {
-    if (!country || !carrier || !cityId) {
-      setUiSelectDisabled(warehouseSelect, true, 'Спочатку оберіть місто', 'Спочатку оберіть місто')
-      return
+    const setCityName = (text = '') => {
+        if (cityNameHidden) cityNameHidden.value = text
     }
 
-    const key = warehousesCacheKey(country, carrier, cityId, q)
-
-    if (warehousesCache.has(key)) {
-      setUiSelectDisabled(warehouseSelect, false, 'Оберіть відділення', 'Нічого не знайдено')
-      renderOptions(warehouseSelect, warehousesCache.get(key), 'Нічого не знайдено')
-      return
+    const setWarehouseName = (text = '') => {
+        if (whNameHidden) whNameHidden.value = text
     }
 
-    renderOptions(warehouseSelect, [], 'Завантаження...')
+    const loadWarehouses = async ({country, carrier, cityId, q = ''}) => {
+        if (!country || !carrier || !cityId) {
+            setUiSelectDisabled(warehouseSelect, true, 'Спочатку оберіть місто', 'Спочатку оберіть місто')
+            return
+        }
 
-    try {
-      const data = await apiGet(
-        `${endpoints.warehouses}?country=${encodeURIComponent(country)}&carrier=${encodeURIComponent(
-          carrier
-        )}&city_id=${encodeURIComponent(cityId)}&q=${encodeURIComponent(q)}`
-      )
+        const key = warehousesCacheKey(country, carrier, cityId, q)
 
-      const items = (data?.items || []).map(w => ({ id: w.id, name: w.name }))
+        if (warehousesCache.has(key)) {
+            setUiSelectDisabled(warehouseSelect, false, 'Оберіть відділення', 'Нічого не знайдено')
+            renderOptions(warehouseSelect, warehousesCache.get(key), 'Нічого не знайдено')
+            return
+        }
 
-      warehousesCache.set(key, items)
+        renderOptions(warehouseSelect, [], 'Завантаження...')
 
-      setUiSelectDisabled(warehouseSelect, false, 'Оберіть відділення', 'Нічого не знайдено')
-      renderOptions(warehouseSelect, items, 'Нічого не знайдено')
-    } catch (e) {
-      if (e.name === 'AbortError') return
-      setUiSelectDisabled(warehouseSelect, true, 'Помилка завантаження', 'Помилка завантаження')
-      console.log(e)
+        try {
+            const data = await apiGet(
+                `${endpoints.warehouses}?country=${encodeURIComponent(country)}&carrier=${encodeURIComponent(
+                    carrier
+                )}&city_id=${encodeURIComponent(cityId)}&q=${encodeURIComponent(q)}`
+            )
+
+            const items = (data?.items || []).map(w => ({id: w.id, name: w.name}))
+
+            warehousesCache.set(key, items)
+
+            setUiSelectDisabled(warehouseSelect, false, 'Оберіть відділення', 'Нічого не знайдено')
+            renderOptions(warehouseSelect, items, 'Нічого не знайдено')
+        } catch (e) {
+            if (e.name === 'AbortError') return
+            setUiSelectDisabled(warehouseSelect, true, 'Помилка завантаження', 'Помилка завантаження')
+            console.log(e)
+        }
     }
-  }
 
-  citySelect.addEventListener('ui-select:change', (e) => {
-    const country = getCountry(deliveryEl, root)
-    const carrier = getCarrier(carriersEl)
-    const cityId = e.detail?.value || ''
-    const cityText = e.detail?.text || ''
+    citySelect.addEventListener('ui-select:change', (e) => {
+        const country = getCountry(deliveryEl, root)
+        const carrier = getCarrier(carriersEl)
+        const cityId = e.detail?.value || ''
+        const cityText = e.detail?.text || ''
 
-    setCityName(cityText)
-    setWarehouseName('')
+        setCityName(cityText)
+        setWarehouseName('')
 
-    setUiSelectDisabled(warehouseSelect, true, 'Оберіть відділення', 'Оберіть відділення')
-    if (!cityId || !carrier) return
+        setUiSelectDisabled(warehouseSelect, true, 'Оберіть відділення', 'Оберіть відділення')
+        if (!cityId || !carrier) return
 
-    loadWarehouses({ country, carrier, cityId })
-  })
+        loadWarehouses({country, carrier, cityId})
+    })
 
-  carriersEl.addEventListener('change', () => {
-    const country = getCountry(deliveryEl, root)
-    const carrier = getCarrier(carriersEl)
-    const cityId = getHiddenValue(citySelect)
+    carriersEl.addEventListener('change', () => {
+        const country = getCountry(deliveryEl, root)
+        const carrier = getCarrier(carriersEl)
+        const cityId = getHiddenValue(citySelect)
 
-    setWarehouseName('') // carrier змінився — відділення точно не те
+        setWarehouseName('') // carrier змінився — відділення точно не те
 
-    setUiSelectDisabled(warehouseSelect, true, 'Оберіть відділення', 'Оберіть відділення')
-    if (!carrier || !cityId) return
+        setUiSelectDisabled(warehouseSelect, true, 'Оберіть відділення', 'Оберіть відділення')
+        if (!carrier || !cityId) return
 
-    loadWarehouses({ country, carrier, cityId })
-  })
+        loadWarehouses({country, carrier, cityId})
+    })
 
-  warehouseSelect.addEventListener('ui-select:change', (e) => {
-    const whText = e.detail?.text || ''
-    setWarehouseName(whText)
-  })
+    warehouseSelect.addEventListener('ui-select:change', (e) => {
+        const whText = e.detail?.text || ''
+        setWarehouseName(whText)
+    })
 
-  warehouseSelect.addEventListener('ui-select:search', (e) => {
-    const q = e.detail?.query || ''
-    const country = getCountry(deliveryEl, root)
-    const carrier = getCarrier(carriersEl)
-    const cityId = getHiddenValue(citySelect)
+    warehouseSelect.addEventListener('ui-select:search', (e) => {
+        const q = e.detail?.query || ''
+        const country = getCountry(deliveryEl, root)
+        const carrier = getCarrier(carriersEl)
+        const cityId = getHiddenValue(citySelect)
 
-    if (!carrier || !cityId) return
-    loadWarehouses({ country, carrier, cityId, q })
-  })
+        if (!carrier || !cityId) return
+        loadWarehouses({country, carrier, cityId, q})
+    })
 }
 
 const bindSearchForCities = (deliveryEl, root = document) => {
@@ -313,7 +325,7 @@ const bindSearchForCities = (deliveryEl, root = document) => {
         } catch (e) {
             if (e.name === 'AbortError') return
             console.log(e)
-            setUiSelectDisabled(citySelect, true, 'Помилка завантаження', 'Помилка завантаження')
+            renderOptions(citySelect, [], 'Нічого не знайдено')
         }
     }
 

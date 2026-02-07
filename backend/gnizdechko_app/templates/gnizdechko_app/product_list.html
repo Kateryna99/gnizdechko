@@ -27,14 +27,37 @@
 
             <h2 class="title">{{category}}</h2>
 
-            <div class="products-filters">FILTERS</div>
+            <div class="products-filters">
+                <div class="products-filters__left">
+                    <form method="get" class="products-filters__search" data-products-search-form>
+                        <span class="visually-hidden">Пошук</span>
 
-            {%if products%}
+                        <input
+                                type="search"
+                                class="products-filters__search-input"
+                                placeholder="Пошук товарів…"
+                                autocomplete="off"
+                                name="q"
+                                value="{{ request.GET.q|default_if_none:'' }}"
+                                data-products-search
+                        >
+                    </form>
+                </div>
+
+                <div class="products-filters__right" data-products-filters-right>
+                    <!-- тут потім будуть фільтри -->
+                </div>
+            </div>
+
             <div class="products__list products-list">
                 <div class="products-list__wrapper">
                     <div class="products-list__grid">
                         {%for product in products%}
-                        <div class="products-list__card {% if product.is_new %}products-list__card--new{% endif %}">
+                        <div
+                                class="products-list__card {% if product.is_new %}products-list__card--new{% endif %}"
+                                data-product-card
+                                data-title="{{ product.title|escape }}"
+                        >
                             <a href="{% url 'product-detail' product.id%}" class="products-list__image">
                                 <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
                             </a>
@@ -54,20 +77,24 @@
                                     {{ product.price }}₴</p>
                             </div>
                         </div>
-                        {%endfor%}
+                        {% endfor %}
                     </div>
 
-                    {% if page_obj.has_next %}
-                    <button
-                            class="products-list__more"
-                            data-next-page="{{ page_obj.next_page_number }}"
+                    <p
+                            class="products__empty"
+                            data-products-empty
+                            {% if products %}hidden{% endif %}
                     >
+                        Нічого не знайдено
+                    </p>
+
+                    {% if page_obj.has_next and page_obj.object_list %}
+                    <button class="products-list__more" data-next-page="{{ page_obj.next_page_number }}">
                         Показати ще
                     </button>
                     {% endif %}
                 </div>
             </div>
-            {%endif%}
         </div>
     </div>
 </section>

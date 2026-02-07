@@ -63,12 +63,15 @@
                                 </a>
                             </li>
                             {% endfor %}
+                            <li class="nav-header__item {% if request.resolver_match.url_name == 'products-all' %}nav-header__item--is-active{% endif %}">
+                                <a href="{% url 'products-all' %}" class="nav-header__link">Всі Товари</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
 
                 <div class="header__cart">
-                    <div class="cart">
+                    <div class="cart" data-header-cart>
                         <img src="{% static 'images/header/cart.svg'%}" alt="Корзина">
 
                         {% if cart_total_qty %}
@@ -166,12 +169,22 @@
 <script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
 {% endif %}
 
-<script>
-    console.log('BASE HTML LOADED');
-</script>
-
 <div class="snackbar" id="snackbar" aria-live="polite" aria-atomic="true">
     <span class="snackbar__text" id="snackbarText"></span>
+</div>
+
+<div class="ui-loader" data-ui-loader hidden aria-hidden="true">
+  <div class="ui-loader__backdrop"></div>
+  <div class="ui-loader__spinner" role="status" aria-label="Завантаження"></div>
+</div>
+
+<div class="ui-modal" data-thanks-modal hidden aria-hidden="true">
+  <div class="ui-modal__backdrop" data-thanks-close></div>
+  <div class="ui-modal__box" role="dialog" aria-modal="true" aria-label="Дякуємо за покупку">
+    <h3 class="ui-modal__title">Дякуємо за покупку!</h3>
+    <p class="ui-modal__text">Ми отримали ваше замовлення.</p>
+    <a class="button button--plain" href="{% url 'home' %}">На головну</a>
+  </div>
 </div>
 </body>
 </html>

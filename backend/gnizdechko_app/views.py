@@ -28,14 +28,24 @@ class ProductListView(ListView):
         elif slug:
             qs = qs.filter(category__slug=slug)
 
+        q = (self.request.GET.get("q") or "").strip()
+        if q:
+            qs = qs.filter(title__icontains=q)
+
         return qs.order_by("-created_at")
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         slug = self.kwargs.get("slug")
+        mode = self.kwargs.get("mode")
 
-        ctx["current_category_slug"] = slug
-        ctx["category"] = get_object_or_404(Category, slug=slug) if slug else 'Новинки'
+        if slug:
+            ctx["category"] = get_object_or_404(Category, slug=slug)
+        elif mode == "new":
+            ctx["category"] = "Новинки"
+        else:
+            ctx["category"] = "Всі товари"
+
         ctx["enabled_filters"] = FILTERS_BY_CATEGORY.get(slug, DEFAULT_FILTERS)
 
         return ctx

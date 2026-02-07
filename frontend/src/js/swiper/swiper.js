@@ -1,41 +1,33 @@
-import Swiper from 'swiper'
-import {Pagination, Navigation, Autoplay} from 'swiper/modules'
+import Swiper, { Navigation, Pagination, Autoplay } from 'swiper'
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
+Swiper.use([Navigation, Pagination, Autoplay])
+
 const aboutSwiper = document.querySelector('.swiper-about')
 if (aboutSwiper) {
     new Swiper('.swiper-about', {
-        modules: [Pagination, Navigation],
         slidesPerView: 1,
         spaceBetween: 24,
         loop: true,
-        pagination: {
-            el: '.swiper-about .swiper-pagination',
-            clickable: true,
+        navigation: {
+            enabled: false,
         },
+
+        pagination: {
+                    el: '.swiper-pagination-about',
+                    clickable: true,
+                },
         breakpoints: {
-            0: {
-                navigation: false,
-            },
             767: {
                 slidesPerView: 1.3,
                 centeredSlides: true,
-                // navigation: {
-                //     nextEl: '.swiper-button-next',
-                //     prevEl: '.swiper-button-prev',
-                // },
             },
             1024: {
                 slidesPerView: 2.1,
                 loop: false,
-
-                pagination: {
-                    el: '.swiper-pagination-about',
-                    clickable: true,
-                },
             },
             1240: {
                 slidesPerView: 1,
@@ -47,7 +39,6 @@ if (aboutSwiper) {
 const newSwiper = document.querySelector('.swiper-new')
 if (newSwiper) {
     new Swiper('.swiper-new', {
-        modules: [Pagination, Autoplay],
         slidesPerView: 2,
         spaceBetween: 8,
 
@@ -62,9 +53,6 @@ if (newSwiper) {
             clickable: true,
         },
         breakpoints: {
-            0: {
-                navigation: false,
-            },
             767: {
                 slidesPerView: 4,
                 // navigation: {

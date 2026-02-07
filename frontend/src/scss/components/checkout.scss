@@ -4,10 +4,10 @@
 /* ========= CHECKOUT LAYOUT ========= */
 .checkout {
   &__wrapper {
-    padding: 1.5rem 0 3rem;
+    padding: 1.5rem 0 7rem;
 
     @include onTabletAndUp {
-      padding: 2rem 0 3.5rem;
+      padding: 2rem 0 13rem;
     }
   }
 
@@ -39,8 +39,13 @@
   }
 
   &__empty-text {
-    @include titleMain;
+    @include titleSmall;
     text-transform: unset;
+  }
+
+  &__right {
+    max-width: 850px;
+    width: 100%;
   }
 }
 
@@ -49,6 +54,7 @@
   &__grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
     gap: 1rem;
 
     margin-bottom: 1rem;

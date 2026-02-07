@@ -37,6 +37,7 @@ class CheckoutForm(forms.Form):
 
     delivery_city_name = forms.CharField(required=False)
     delivery_warehouse_name = forms.CharField(required=False)
+    country_name = forms.CharField(required=False)
 
     intl_city = forms.CharField(required=False)
     intl_postcode = forms.CharField(required=False)

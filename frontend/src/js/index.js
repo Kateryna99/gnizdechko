@@ -10,6 +10,9 @@ import {initCartQty} from "./utils/init-cart-qty.js";
 import {initHeaderScroll} from "./utils/init-header-scroll.js";
 import {initUiSelect} from "./utils/init-dropdown.js";
 import {initDeliveryStep1CountryToCarriers, initDeliveryStep3CityToWarehouses, initDeliveryStep4CarrierToCities } from "./utils/delivery.js";
+import {initCheckoutSubmit} from "./utils/checkout.js";
+import {initHideHeaderCartOnCheckout} from "./utils/init-hide-header-cart-on-checkout.js";
+import {initProductsSearch} from "./utils/init-products-search.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     initBurgerMenu()
@@ -26,4 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDeliveryStep1CountryToCarriers()
     initDeliveryStep4CarrierToCities()
     initDeliveryStep3CityToWarehouses()
+    initCheckoutSubmit()
+    initHideHeaderCartOnCheckout()
+    initProductsSearch()
 });

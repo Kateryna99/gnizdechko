@@ -36,11 +36,6 @@ export const initUiSelect = (root = document) => {
     const close = () => {
       select.classList.remove('is-open')
       trigger.setAttribute('aria-expanded', 'false')
-
-      if (searchInput) {
-        searchInput.value = ''
-        filter('')
-      }
     }
 
     const open = () => {

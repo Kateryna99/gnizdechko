@@ -14,15 +14,11 @@
   }
 
   &__container {
-    max-width: 2500px;
+    max-width: 2000px;
     width: 100%;
 
     margin: 0 auto;
     padding: 0 1rem;
-
-    @include onBigTabletAndUp {
-      padding: 0 2rem;
-    }
   }
 
   &__block {
@@ -32,6 +28,8 @@
 
     @include onTabletAndUp {
       grid-template-columns: repeat(2, minmax(300px, 1fr));
+      justify-items: center;
+      justify-content: center;
       gap: 2.5rem;
       align-items: start;
     }
@@ -113,6 +111,9 @@
   }
 
   &__info {
+    max-width: 1000px;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -184,6 +185,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  &--cart {
+    flex-direction: row;
+
+    .colors__dot {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
 
 
   &__title {

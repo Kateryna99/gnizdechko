@@ -9,7 +9,8 @@
                 <div class="checkout__left">
                     <h1 class="checkout__title">Ваші дані</h1>
 
-                    <form class="checkout-form" id="checkout-form" method="post" action="{% url 'checkout-send' %}"
+                    <form class="checkout-form" id="checkout-form" data-checkout-form method="post"
+                          action="{% url 'checkout-send' %}"
                           novalidate>
                         {% csrf_token %}
 
@@ -25,7 +26,6 @@
                                         type="text"
                                         value="{{ form.first_name.value|default_if_none:'' }}"
                                         autocomplete="given-name"
-                                        required
                                 >
                                 {% if form.first_name.errors %}
                                 <p class="checkout-form__error">
@@ -47,7 +47,6 @@
                                         type="text"
                                         autocomplete="family-name"
                                         value="{{ form.last_name.value|default_if_none:'' }}"
-                                        required
                                 >
                                 {% if form.last_name.errors %}
                                 <p class="checkout-form__error">
@@ -72,9 +71,9 @@
                                             type="hidden"
                                             name="country"
                                             value="UA"
-                                            required
                                             data-hidden
                                     >
+                                    <input type="hidden" name="country_name" id="country_name">
 
                                     <button
                                             class="ui-select__trigger"
@@ -141,7 +140,6 @@
                                         autocomplete="tel"
                                         inputmode="tel"
                                         value="{{ form.phone.value|default_if_none:'' }}"
-                                        required
                                 >
                                 {% if form.phone.errors %}
                                 <p class="checkout-form__error">
@@ -163,7 +161,6 @@
                                         type="email"
                                         autocomplete="email"
                                         value="{{ form.email.value|default_if_none:'' }}"
-                                        required
                                 >
                                 {% if form.email.errors %}
                                 <p class="checkout-form__error">
@@ -258,7 +255,6 @@
                                         <input
                                                 type="hidden"
                                                 name="delivery_city"
-                                                required
                                                 data-hidden
                                                 value="{{ form.delivery_city.value|default_if_none:'' }}"
                                         >
@@ -291,13 +287,11 @@
                                                 data-trigger
                                         >
           <span class="ui-select__value" data-placeholder>
-            <span class="ui-select__value" data-placeholder>
   {% if form.delivery_warehouse_name.value %}
     {{ form.delivery_warehouse_name.value }}
   {% else %}
     Оберіть відділення
   {% endif %}
-</span>
           </span>
                                             <span class="ui-select__arrow" aria-hidden="true"></span>
                                         </button>
@@ -324,7 +318,6 @@
                                         <input
                                                 type="hidden"
                                                 name="delivery_warehouse"
-                                                required
                                                 data-hidden
                                                 value="{{ form.delivery_warehouse.value|default_if_none:'' }}"
                                         >
@@ -351,7 +344,6 @@
                                             name="intl_city"
                                             type="text"
                                             autocomplete="address-level2"
-                                            required
                                             value="{{ form.intl_city.value|default_if_none:'' }}"
                                     >
 
@@ -373,7 +365,6 @@
                                             name="intl_postcode"
                                             type="text"
                                             autocomplete="postal-code"
-                                            required
                                             value="{{ form.intl_postcode.value|default_if_none:'' }}"
                                     >
 
@@ -396,7 +387,6 @@
                                             name="intl_street"
                                             type="text"
                                             autocomplete="street-address"
-                                            required
                                             value="{{ form.intl_street.value|default_if_none:'' }}"
                                     >
 
@@ -423,16 +413,17 @@
                                     <div class="cart-product__image">
                                         <img src="{{ product.image }}" alt="{{ product.title }}">
                                     </div>
+                                </a>
 
                                     <div class="cart-product__block">
                                         <h4 class="cart-product__title">{{ product.title }}</h4>
 
                                         {%if product.color_id%}
-                                        <div class="cart-product__colors">
+                                        <div class="cart-product__colors colors colors--cart">
                                             <h5 class="cart-product__title">Колір:</h5>
 
                                             <span
-                                                    class="cart-product__color"
+                                                    class="colors__dot is-active"
                                                     style="background-color: {{ product.color_hex }};"
                                                     aria-label="{{ product.color_name }}"
                                                     title="{{ product.color_name }}"
@@ -467,7 +458,6 @@
                                             {{ product.price }}₴
                                         </p>
                                     </div>
-                                </a>
 
                                 <button
                                         type="button"
