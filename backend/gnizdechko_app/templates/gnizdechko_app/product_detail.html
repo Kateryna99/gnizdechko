@@ -16,7 +16,9 @@
                     </li>
 
                     <li class="breadcrumbs__item">
-                        <a href="{%url 'products-category' object.category.slug%}" class="breadcrumbs__link">{{object.category}}</a>
+                        <a href="{% url 'products-category' breadcrumb_category.slug %}" class="breadcrumbs__link">
+                            {{ breadcrumb_category.name }}
+                        </a>
                     </li>
 
                     <li>
@@ -121,7 +123,9 @@
                                 </button>
                             </div>
 
-                            <button type="button" class="detail-info__add button" data-add-to-cart data-product-id="{{ object.id }}">Додати в кошик</button>
+                            <button type="button" class="detail-info__add button" data-add-to-cart
+                                    data-product-id="{{ object.id }}">Додати в кошик
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -26,7 +26,7 @@ class ProductListView(ListView):
         if mode == "new":
             qs = qs.filter(is_new=True)
         elif slug:
-            qs = qs.filter(category__slug=slug)
+            qs = qs.filter(categories__slug=slug).distinct()
 
         q = (self.request.GET.get("q") or "").strip()
         if q:
@@ -53,3 +53,14 @@ class ProductListView(ListView):
 @method_decorator(ensure_csrf_cookie, name="dispatch")
 class ProductDetailView(DetailView):
     model = Product
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        cat_slug = self.request.GET.get("cat")
+        if cat_slug:
+            ctx["breadcrumb_category"] = Category.objects.filter(slug=cat_slug).first()
+        else:
+            ctx["breadcrumb_category"] = self.object.main_category
+
+        return ctx

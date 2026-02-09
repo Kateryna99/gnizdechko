@@ -2,117 +2,14 @@
 @use '../abstracts/mixins' as *;
 
 /////// HERO
-.hero {
+.special-products {
   &__wrapper {
     position: relative;
 
     padding: 0 0 1.5rem;
 
-    display: grid;
-    grid-template-columns: minmax(320px, 1fr);
-    gap: 1.5rem;
-
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-
     @include onTabletAndUp {
       padding: 0 0 2rem;
-    }
-
-    @include onLaptopAndUp {
-      grid-template-columns: repeat(2, minmax(320px, 1fr));
-      align-items: start;
-
-      padding-bottom: 0;
-      border-bottom: 0;
-
-      &::after {
-        content: '';
-        position: absolute;
-
-        bottom: 0;
-        right: 0;
-        width: calc(50% + 0.75rem);
-
-        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-      }
-    }
-  }
-
-  &__image {
-    max-width: 100%;
-    width: 100%;
-
-    height: calc(100svh - 4rem);
-
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-
-    @include onTabletAndUp {
-      height: calc(100svh - 5rem);
-
-      border-bottom: none;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
-      object-position: center;
-
-      -webkit-user-select: none;
-
-      @include onTabletAndUp {
-        transform: scale(0.92);
-      }
-
-      @include onLaptopAndUp {
-        transform: scale(1);
-      }
-    }
-  }
-
-  &__block {
-    padding: 0 1rem;
-
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-
-    @include onLaptopAndUp {
-      padding-left: 0;
-
-      position: sticky;
-      top: 6rem;
-      align-self: start;
-    }
-  }
-
-  &__moto {
-    font-size: $text-32;
-
-    @media (min-width: 520px) {
-      font-size: $text-48;
-    }
-
-    @include onTabletAndUp {
-      font-size: $text-64;
-    }
-
-    @include onBigTabletAndUp {
-      font-size: 5rem;
-    }
-    @include onLaptopAndUp {
-      font-size: 4rem;
-    }
-  }
-
-  &__subtitle {
-    align-self: end;
-
-    color: $colorPrimary;
-
-    @include onTabletAndUp {
-      font-size: $text-24;
     }
   }
 }
@@ -141,7 +38,7 @@
   }
 }
 
-.swiper-pagination-new {
+.swiper-pagination-special {
   display: flex;
   justify-content: center;
   margin-top: 2rem;
@@ -182,22 +79,24 @@
 
 
 .home-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 180px));
-  gap: 1rem;
+  &__wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
 
-  padding: 0 1rem;
+    padding: 0 1rem;
 
-  @include onTabletAndUp {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 250px));
-  }
+    @include onTabletAndUp {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 250px));
+    }
 
-  @include onBigTabletAndUp {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 220px));
-  }
+    @include onBigTabletAndUp {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 220px));
+    }
 
-  @include onLaptopAndUp {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 280px));
+    @include onLaptopAndUp {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 280px));
+    }
   }
 
   &__item {
@@ -385,7 +284,7 @@
   }
 
   @include onLaptopAndUp {
-     height: calc(85svh - 4rem);
+    height: calc(85svh - 4rem);
   }
 
   &__grid {
@@ -488,7 +387,7 @@
       }
 
       &--two-images {
-         grid-auto-rows: minmax(70svh, 80svh);
+        grid-auto-rows: minmax(70svh, 80svh);
       }
     }
   }

@@ -9,10 +9,15 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "price", "sale_price", 'is_new')
-    list_filter = ("category", "colors")
+    list_display = ("title", "categories_list", "price", "sale_price", 'is_new', 'is_special')
+    list_filter = ("categories", "colors")
     search_fields = ("title", "subtitle", "description")
     inlines = [ProductImageInline]
+
+    def categories_list(self, obj):
+        return ", ".join(obj.categories.values_list("name", flat=True))
+
+    categories_list.short_description = "Категорії"
 
 
 @admin.register(Category)

@@ -1,4 +1,4 @@
-import Swiper, { Navigation, Pagination, Autoplay } from 'swiper'
+import Swiper, {Navigation, Pagination, Autoplay} from 'swiper'
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -17,9 +17,9 @@ if (aboutSwiper) {
         },
 
         pagination: {
-                    el: '.swiper-pagination-about',
-                    clickable: true,
-                },
+            el: '.swiper-pagination-about',
+            clickable: true,
+        },
         breakpoints: {
             767: {
                 slidesPerView: 1.3,
@@ -36,33 +36,24 @@ if (aboutSwiper) {
     })
 }
 
-const newSwiper = document.querySelector('.swiper-new')
-if (newSwiper) {
-    new Swiper('.swiper-new', {
-        slidesPerView: 2,
-        spaceBetween: 8,
+new Swiper('.swiper-special', {
+    slidesPerView: 1,
+    spaceBetween: 8,
 
-        autoplay: {
-            delay: 3500,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
+    autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+    },
 
-        pagination: {
-            el: '.swiper-pagination-new',
-            clickable: true,
+    pagination: {
+        el: '.swiper-pagination-special',
+        clickable: true,
+    },
+    breakpoints: {
+        767: {
+            slidesPerView: 4,
         },
-        breakpoints: {
-            767: {
-                slidesPerView: 4,
-                // navigation: {
-                //     nextEl: '.swiper-button-next',
-                //     prevEl: '.swiper-button-prev',
-                // },
-            },
-            1240: {
-                slidesPerView: 5,
-            }
-        },
-    })
-}
+    },
+})
+

@@ -2,6 +2,7 @@ from .models import Category, Product
 
 def categories_context(request):
     new_products = Product.objects.filter(is_new=True)
+    special_products = Product.objects.filter(is_special=True)
 
     categories_with_products = Category.objects.filter(
         products__isnull=False
@@ -11,4 +12,5 @@ def categories_context(request):
         "all_categories": categories_with_products,
         "new_products": new_products,
         "has_new_products": new_products.exists(),
+        "special_products": special_products,
     }

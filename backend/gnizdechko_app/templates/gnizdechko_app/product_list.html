@@ -58,7 +58,7 @@
                                 data-product-card
                                 data-title="{{ product.title|escape }}"
                         >
-                            <a href="{% url 'product-detail' product.id%}" class="products-list__image">
+                            <a href="{% url 'product-detail' product.id%}?cat={{ category.slug }}" class="products-list__image">
                                 <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
                             </a>
 

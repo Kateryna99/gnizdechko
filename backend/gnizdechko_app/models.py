@@ -23,10 +23,12 @@ class Color(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(
+    categories = models.ManyToManyField(Category, related_name="products")
+
+    main_category = models.ForeignKey(
         Category,
         on_delete=models.PROTECT,
-        related_name="products",
+        related_name="main_products",
     )
 
     title = models.CharField(max_length=500)
@@ -37,6 +39,7 @@ class Product(models.Model):
     sale_price = models.PositiveIntegerField(null=True, blank=True)
 
     is_new = models.BooleanField(default=False, db_index=True)
+    is_special = models.BooleanField(default=False, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     main_image = models.ImageField(
@@ -52,6 +55,15 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def clean(self):
+        super().clean()
+        if not self.pk:
+            return
+        if self.categories.count() == 0:
+            raise ValidationError({
+                "categories": "Товар повинен мати хоча б одну категорію."
+            })
 
     def clean(self):
         if self.sale_price is not None and self.sale_price >= self.price:
