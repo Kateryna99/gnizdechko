@@ -3,19 +3,16 @@ from django.conf import settings
 from django.shortcuts import render, redirect, reverse
 from django.views.decorators.http import require_http_methods, require_GET
 from django.http import JsonResponse
-from .constants import COUNTRIES
+from .constants import EXCLUDE
 from .services.novaposhta import np_get_cities, np_get_warehouses
 from cart.utils import get_cart_summary
 from .forms import CheckoutForm
+from babel import Locale
 
 
 # Create your views here.
 def checkout(request):
-    context = {
-        "countries": COUNTRIES
-    }
-
-    return render(request, "orders/checkout.html", context)
+    return render(request, "orders/checkout.html")
 
 
 def ok(items):
@@ -24,6 +21,31 @@ def ok(items):
 
 def fail(message, status=400):
     return JsonResponse({"ok": False, "items": [], "error": message}, status=status)
+
+
+@require_GET
+def countries_api(request):
+    url = "https://restcountries.com/v3.1/all?fields=cca2,name"
+    r = requests.get(url, timeout=10)
+    r.raise_for_status()
+    data = r.json()
+
+    uk = Locale.parse("uk")
+
+    items = []
+    for c in data:
+        code = (c.get("cca2") or "").upper()
+        if not code or code in EXCLUDE:
+            continue
+
+        en_name = ((c.get("name") or {}).get("common")) or code
+
+        ua_name = uk.territories.get(code, en_name)
+
+        items.append({"id": code, "name": ua_name})
+
+    items.sort(key=lambda x: (x["id"] != "UA", x["name"].lower()))
+    return JsonResponse({"ok": True, "items": items})
 
 
 @require_GET
@@ -139,6 +161,10 @@ def checkout_telegram(request):
                 f"   📮 Індекс: {cd.get('intl_postcode')}",
                 f"   🏠 Адреса: {cd.get('intl_street')}",
             ])
+
+        comment = (cd.get("delivery_comment") or "").strip()
+        if comment:
+            lines.append(f"   📝 Коментар: {comment}")
 
         lines.extend([
             "",

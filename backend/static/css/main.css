@@ -1657,6 +1657,11 @@ input[type=search]::-webkit-search-cancel-button {
 .checkout-form__req {
   color: #7e0303;
 }
+.checkout-form .checkout-form__hint {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  opacity: 0.75;
+}
 .checkout-form__input, .checkout-form__select {
   width: 100%;
   min-width: 0;
@@ -1746,6 +1751,22 @@ input[type=search]::-webkit-search-cancel-button {
 }
 .delivery__field {
   margin-top: 1.25rem;
+}
+.delivery__field--full {
+  grid-column: 1/-1;
+}
+.delivery__textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  font: inherit;
+  background: transparent;
+}
+.delivery__optional {
+  opacity: 0.7;
 }
 .delivery__label {
   display: block;
@@ -2021,6 +2042,15 @@ input[type=radio]:checked + .payment__control::after {
 .payment__hint {
   font-size: 0.8rem;
   color: #6b7280;
+}
+
+.swiper:not(.swiper-initialized) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.swiper {
+  min-height: 1px;
 }
 
 *,

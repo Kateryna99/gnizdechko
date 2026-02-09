@@ -29,6 +29,7 @@ const apiGet = (() => {
 })()
 
 const getEndpoints = (deliveryEl) => ({
+    countries: deliveryEl?.dataset?.urlCountries || '/api/delivery/countries/',
     carriers: deliveryEl?.dataset?.urlCarriers || '/api/delivery/carriers/',
     cities: deliveryEl?.dataset?.urlCities || '/api/delivery/cities/',
     warehouses: deliveryEl?.dataset?.urlWarehouses || '/api/delivery/warehouses/',
@@ -38,7 +39,7 @@ const getCountry = (deliveryEl, root = document) => {
     const countrySelect =
         qs(deliveryEl, '[data-country-select]') || qs(root, '[data-country-select]')
 
-    return countrySelect?.querySelector('input[type="hidden"]')?.value || 'UA'
+    return countrySelect?.querySelector('input[name="country"][data-hidden]')?.value || 'UA'
 }
 
 const getCarrier = (carriersEl) => {
@@ -98,97 +99,127 @@ const ensureDefaultCarrierForUA = (carriersEl) => {
 }
 
 export const initDeliveryStep1CountryToCarriers = (root = document) => {
-    const deliveryEl = qs(root, '[data-delivery]')
-    if (!deliveryEl) return
+  const deliveryEl = qs(root, '[data-delivery]')
+  if (!deliveryEl) return
 
-    const endpoints = getEndpoints(deliveryEl)
+  const endpoints = getEndpoints(deliveryEl)
 
-    const countrySelect =
-        qs(deliveryEl, '[data-country-select]') || qs(root, '[data-country-select]')
-    const carriersEl = qs(deliveryEl, '[data-carriers]')
-    const citySelect = qs(deliveryEl, '[data-city-select]')
-    const warehouseSelect = qs(deliveryEl, '[data-warehouse-select]')
+  const countrySelect =
+    qs(deliveryEl, '[data-country-select]') || qs(root, '[data-country-select]')
+  const carriersEl = qs(deliveryEl, '[data-carriers]')
+  const citySelect = qs(deliveryEl, '[data-city-select]')
+  const warehouseSelect = qs(deliveryEl, '[data-warehouse-select]')
 
-    if (!countrySelect || !carriersEl) return
+  if (!countrySelect || !carriersEl) return
 
-    const countryNameHidden = root.querySelector('#country_name')
+  const hiddenCountry = countrySelect.querySelector('input[name="country"][data-hidden]')
+  const valueEl = countrySelect.querySelector('.ui-select__value')
+  const countryNameHidden = root.querySelector('#country_name')
 
-    const setCountryName = (text = '') => {
-        if (countryNameHidden) countryNameHidden.value = text
-    }
+  const setCountryName = (text = '') => {
+    if (countryNameHidden) countryNameHidden.value = text
+  }
 
-    const resetCityWarehouse = (cityText, whText) => {
-        setUiSelectDisabled(citySelect, true, cityText, cityText)
-        setUiSelectDisabled(warehouseSelect, true, whText, whText)
-    }
+  const setCountryValue = (code, name) => {
+    if (hiddenCountry) hiddenCountry.value = code
+    if (valueEl) valueEl.textContent = name
+    setCountryName(name)
 
-    const toggleUaIntl = (country) => {
-        const uaBlock = deliveryEl.querySelector('[data-delivery-ua]')
-        const intlBlock = deliveryEl.querySelector('[data-delivery-intl]')
-        if (!uaBlock || !intlBlock) return
-
-        const isUA = country === 'UA'
-        uaBlock.hidden = !isUA
-        intlBlock.hidden = isUA
-    }
-
-    const applyCountryState = async (country) => {
-        toggleUaIntl(country)
-
-        if (country !== 'UA') {
-            setCarriersDisabled(carriersEl, true)
-            renderCarriers(carriersEl, [])
-            resetCityWarehouse('Доставка недоступна', 'Доставка недоступна')
-            return
-        }
-
-        resetCityWarehouse('Оберіть службу доставки', 'Спочатку оберіть місто')
-
-        setCarriersDisabled(carriersEl, true)
-        renderCarriers(carriersEl, [])
-
-        try {
-            const data = await apiGet(`${endpoints.carriers}?country=${encodeURIComponent(country)}`)
-
-            if (!data?.ok) throw new Error(data?.error || 'API error')
-
-            const carriers = data?.items || []
-
-            renderCarriers(carriersEl, carriers)
-
-            const hasAny = carriers.length
-            setCarriersDisabled(carriersEl, !hasAny)
-
-            if (hasAny) {
-                ensureDefaultCarrierForUA(carriersEl)
-                setUiSelectDisabled(citySelect, false, 'Оберіть місто', 'Почніть вводити назву')
-
-                carriersEl.dispatchEvent(new Event('change', {bubbles: true}))
-            }
-        } catch (e) {
-            if (e.name === 'AbortError') return
-            setCarriersDisabled(carriersEl, true)
-            renderCarriers(carriersEl, [])
-            resetCityWarehouse('Доставка недоступна', 'Доставка недоступна')
-            console.log(e)
-        }
-    }
-
-    const initialCountry = getCountry(deliveryEl, root)
-    setCountryName(countrySelect.querySelector('.ui-select__value')?.textContent?.trim() || '')
-
-    applyCountryState(initialCountry)
-
-    countrySelect.addEventListener('ui-select:change', (e) => {
-        const country = e.detail?.value || ''
-        if (!country) return
-
-        setCountryName(e.detail?.text || '')
-
-        applyCountryState(country)
+    countrySelect.querySelectorAll('.ui-select__option').forEach(o => {
+      const isSel = o.dataset.value === code
+      o.classList.toggle('is-selected', isSel)
+      o.setAttribute('aria-selected', isSel ? 'true' : 'false')
     })
-}
+  }
 
+  const resetCityWarehouse = (cityText, whText) => {
+    setUiSelectDisabled(citySelect, true, cityText, cityText)
+    setUiSelectDisabled(warehouseSelect, true, whText, whText)
+  }
+
+  const toggleUaIntl = (country) => {
+    const uaBlock = deliveryEl.querySelector('[data-delivery-ua]')
+    const intlBlock = deliveryEl.querySelector('[data-delivery-intl]')
+    if (!uaBlock || !intlBlock) return
+
+    const isUA = country === 'UA'
+    uaBlock.hidden = !isUA
+    intlBlock.hidden = isUA
+  }
+
+  const applyCountryState = async (country) => {
+    toggleUaIntl(country)
+
+    if (country !== 'UA') {
+      setCarriersDisabled(carriersEl, true)
+      renderCarriers(carriersEl, [])
+      resetCityWarehouse('Доставка недоступна', 'Доставка недоступна')
+      return
+    }
+
+    resetCityWarehouse('Оберіть службу доставки', 'Спочатку оберіть місто')
+
+    setCarriersDisabled(carriersEl, true)
+    renderCarriers(carriersEl, [])
+
+    try {
+      const data = await apiGet(`${endpoints.carriers}?country=${encodeURIComponent(country)}`)
+      if (!data?.ok) throw new Error(data?.error || 'API error')
+
+      const carriers = data?.items || []
+      renderCarriers(carriersEl, carriers)
+
+      const hasAny = carriers.length
+      setCarriersDisabled(carriersEl, !hasAny)
+
+      if (hasAny) {
+        ensureDefaultCarrierForUA(carriersEl)
+        setUiSelectDisabled(citySelect, false, 'Оберіть місто', 'Почніть вводити назву')
+        carriersEl.dispatchEvent(new Event('change', { bubbles: true }))
+      }
+    } catch (e) {
+      if (e.name === 'AbortError') return
+      setCarriersDisabled(carriersEl, true)
+      renderCarriers(carriersEl, [])
+      resetCityWarehouse('Доставка недоступна', 'Доставка недоступна')
+      console.log(e)
+    }
+  }
+
+  const initCountries = async () => {
+    setCountryValue(hiddenCountry?.value || 'UA', (valueEl?.textContent?.trim() || 'Україна'))
+
+    try {
+      const data = await apiGet(endpoints.countries)
+      if (!data?.ok) throw new Error(data?.error || 'API error')
+
+      renderOptions(countrySelect, data.items || [], 'Нічого не знайдено')
+
+      const currentCode = hiddenCountry?.value || 'UA'
+      const opt = countrySelect.querySelector(`.ui-select__option[data-value="${currentCode}"]`)
+
+      if (opt) setCountryValue(currentCode, opt.textContent.trim())
+      else setCountryValue('UA', 'Україна')
+    } catch (e) {
+      setCountryValue('UA', 'Україна')
+      console.log(e)
+    }
+  }
+
+  initCountries().then(() => {
+    const initialCountry = getCountry(deliveryEl, root)
+    applyCountryState(initialCountry)
+  })
+
+  countrySelect.addEventListener('ui-select:change', (e) => {
+    const country = e.detail?.value || ''
+    const text = e.detail?.text || ''
+    if (!country) return
+
+    setCountryValue(country, text)
+    applyCountryState(country)
+  })
+}
 const bindCityToWarehouses = (deliveryEl, root = document) => {
     const endpoints = getEndpoints(deliveryEl)
 

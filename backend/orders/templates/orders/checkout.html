@@ -66,6 +66,7 @@
                                         class="ui-select"
                                         data-select="country"
                                         data-country-select
+                                        data-url-countries="{% url 'countries-api' %}"
                                 >
                                     <input
                                             type="hidden"
@@ -73,7 +74,7 @@
                                             value="UA"
                                             data-hidden
                                     >
-                                    <input type="hidden" name="country_name" id="country_name">
+                                    <input type="hidden" name="country_name" id="country_name" value="Україна">
 
                                     <button
                                             class="ui-select__trigger"
@@ -81,12 +82,7 @@
                                             aria-expanded="false"
                                             aria-haspopup="listbox"
                                     >
-      <span
-              class="ui-select__value"
-              data-placeholder
-      >
-        Україна
-      </span>
+                                        <span class="ui-select__value" data-placeholder>Україна</span>
                                         <span class="ui-select__arrow" aria-hidden="true"></span>
                                     </button>
 
@@ -101,29 +97,12 @@
                                         </div>
 
                                         <div class="ui-select__list" data-options>
-                                            {% for code, name in countries %}
-                                            <div
-                                                    class="ui-select__option {% if code == 'UA' %}is-selected{% endif %}"
-                                                    data-value="{{ code }}"
-                                                    role="option"
-                                                    aria-selected="{% if code == 'UA' %}true{% else %}false{% endif %}"
-                                            >
-                                                {{ name }}
-                                            </div>
-                                            {% endfor %}
-
-                                            <div class="ui-select__empty" hidden>
-                                                Нічого не знайдено
-                                            </div>
+                                            <div class="ui-select__empty" hidden>Нічого не знайдено</div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <p
-                                        class="checkout-form__error"
-                                        data-error-for="country"
-                                        hidden
-                                >
+                                <p class="checkout-form__error" data-error-for="country" hidden>
                                     Оберіть країну
                                 </p>
                             </div>
@@ -398,6 +377,20 @@
                                     {% endif %}
                                 </div>
                             </div>
+
+                            <div class="delivery__field delivery__field--full">
+                                <label class="delivery__label" for="delivery_comment">
+                                    Коментар до доставки <span class="delivery__optional">(необов’язково)</span>
+                                </label>
+
+                                <textarea
+                                        class="delivery__textarea"
+                                        id="delivery_comment"
+                                        name="delivery_comment"
+                                        rows="4"
+                                        placeholder="Почніть писати тут…"
+                                >{{ form.delivery_comment.value|default_if_none:'' }}</textarea>
+                            </div>
                         </section>
                     </form>
                 </div>
@@ -415,49 +408,49 @@
                                     </div>
                                 </a>
 
-                                    <div class="cart-product__block">
-                                        <h4 class="cart-product__title">{{ product.title }}</h4>
+                                <div class="cart-product__block">
+                                    <h4 class="cart-product__title">{{ product.title }}</h4>
 
-                                        {%if product.color_id%}
-                                        <div class="cart-product__colors colors colors--cart">
-                                            <h5 class="cart-product__title">Колір:</h5>
+                                    {%if product.color_id%}
+                                    <div class="cart-product__colors colors colors--cart">
+                                        <h5 class="cart-product__title">Колір:</h5>
 
-                                            <span
-                                                    class="colors__dot is-active"
-                                                    style="background-color: {{ product.color_hex }};"
-                                                    aria-label="{{ product.color_name }}"
-                                                    title="{{ product.color_name }}"
-                                            ></span>
-                                        </div>
-                                        {%endif%}
+                                        <span
+                                                class="colors__dot is-active"
+                                                style="background-color: {{ product.color_hex }};"
+                                                aria-label="{{ product.color_name }}"
+                                                title="{{ product.color_name }}"
+                                        ></span>
+                                    </div>
+                                    {%endif%}
 
-                                        <div
-                                                class="amount-container amount-container--cart"
-                                                data-cart-key="{{ product.key }}"
-                                        >
-                                            <button
-                                                    type="button"
-                                                    class="amount-container__button amount-container__button--cart"
-                                                    data-action="decrease">
-                                                <span>-</span>
-                                            </button>
-                                            <p class="amount-container__value amount-container__value--cart">
-                                                <span data-cart-amount>{{ product.qty }}</span>
-                                            </p>
-                                            <button
-                                                    type="button"
-                                                    class="amount-container__button amount-container__button--cart"
-                                                    data-action="increase">
-                                                <span>+</span>
-                                            </button>
-                                        </div>
+                                    <div
+                                            class="amount-container amount-container--cart"
+                                            data-cart-key="{{ product.key }}"
+                                    >
+                                        <button
+                                                type="button"
+                                                class="amount-container__button amount-container__button--cart"
+                                                data-action="decrease">
+                                            <span>-</span>
+                                        </button>
+                                        <p class="amount-container__value amount-container__value--cart">
+                                            <span data-cart-amount>{{ product.qty }}</span>
+                                        </p>
+                                        <button
+                                                type="button"
+                                                class="amount-container__button amount-container__button--cart"
+                                                data-action="increase">
+                                            <span>+</span>
+                                        </button>
+                                    </div>
 
-                                        <p class="cart-product__info">
+                                    <p class="cart-product__info">
                                             <span class="cart-product__quantity"
                                                   data-cart-qty-label>{{ product.qty }} x </span>
-                                            {{ product.price }}₴
-                                        </p>
-                                    </div>
+                                        {{ product.price }}₴
+                                    </p>
+                                </div>
 
                                 <button
                                         type="button"

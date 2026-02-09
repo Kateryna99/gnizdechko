@@ -8,6 +8,15 @@
 @use 'components/delivery-and-payment';
 @use 'components/checkout';
 
+.swiper:not(.swiper-initialized) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.swiper {
+  min-height: 1px;
+}
+
 *,
 *::before,
 *::after {

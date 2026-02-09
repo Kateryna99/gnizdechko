@@ -32,6 +32,8 @@ class CheckoutForm(forms.Form):
         error_messages={"required": "Оберіть країну"},
     )
 
+    delivery_comment = forms.CharField(required=False, widget=forms.Textarea)
+
     delivery_city = forms.CharField(required=False)
     delivery_warehouse = forms.CharField(required=False)
 

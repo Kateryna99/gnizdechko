@@ -93,6 +93,12 @@
     color: #7e0303;
   }
 
+  .checkout-form__hint {
+  margin-top: 0.5rem;
+  font-size: $text-14;
+  opacity: 0.75;
+}
+
   &__input,
   &__select {
     width: 100%;
@@ -194,6 +200,25 @@
 
   &__field {
     margin-top: 1.25rem;
+
+    &--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+    padding: 12px 14px;
+    border: 1px solid $colorBlack;
+    border-radius: 10px;
+    font: inherit;
+    background: transparent;
+  }
+
+  &__optional {
+    opacity: 0.7;
   }
 
   &__label {
