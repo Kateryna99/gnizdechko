@@ -26,7 +26,6 @@ if (aboutSwiper) {
                 centeredSlides: true,
             },
             1024: {
-                slidesPerView: 2.1,
                 loop: false,
             },
             1240: {

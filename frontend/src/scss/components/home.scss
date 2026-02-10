@@ -252,10 +252,6 @@
   }
 }
 
-.swiper-about {
-
-}
-
 .about-us-card {
   height: calc(85svh - 4rem);
 
@@ -425,14 +421,12 @@
   }
 }
 
-.swiper-new {
-
-}
 
 .swiper-pagination-bullet-active {
   width: 20px !important;
   border-radius: 8px !important;
   background: $colorPrimary !important;
+  transition: width 1s ease;
 }
 
 .swiper-pagination-about {

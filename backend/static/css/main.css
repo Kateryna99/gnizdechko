@@ -884,6 +884,7 @@
   width: 20px !important;
   border-radius: 8px !important;
   background: #4F553F !important;
+  transition: width 1s ease;
 }
 
 .swiper-pagination-about {
