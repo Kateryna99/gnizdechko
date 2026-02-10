@@ -14,7 +14,7 @@ class Category(models.Model):
 
     main_image_webp = ImageSpecField(
         source='main_image',
-        processors=[ResizeToFit(1000, 1000)],
+        processors=[ResizeToFit(500, 800)],
         format='WEBP',
         options={'quality': 80},
     )
@@ -99,7 +99,7 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to="products/extra/")
     image_webp = ImageSpecField(
         source='image',
-        processors=[ResizeToFit(1000, 1500)],
+        processors=[ResizeToFit(400, 600)],
         format='WEBP',
         options={'quality': 80},
     )
