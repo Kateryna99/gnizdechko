@@ -59,7 +59,17 @@
                                 data-title="{{ product.title|escape }}"
                         >
                             <a href="{% url 'product-detail' product.id%}?cat={{ category.slug }}" class="products-list__image">
-                                <img src="{{ product.main_image_webp.url }}" alt="{{ product.title }}">
+                                <img
+                                        src="{{ product.main_image_webp.url }}"
+                                        alt="{{ product.title }}"
+                                        srcset="
+                                            {{ product.main_image_webp_sm.url }} 480w,
+                                            {{ product.main_image_webp_md.url }} 767w,
+                                            {{ product.main_image_webp_lg.url }} 1024w
+                                          "
+                                        sizes="(min-width: 767px) 350px 450px"
+                                        width="400" height="600"
+                                >
                             </a>
 
                             <h4 class="products-list__title">

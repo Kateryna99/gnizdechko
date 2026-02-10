@@ -3,7 +3,7 @@
 {% block content %}
 <!--#object-->
 <section class="product-detail">
-    <div class="product-detail__container">
+    <div class="container">
         <div class="product-detail__wrapper">
             <div class="breadcrumbs">
                 <ul class="breadcrumbs__list">
@@ -34,18 +34,31 @@
             <div class="product-detail__block">
                 <div class="product-detail__images">
                     <div class="product-detail__main-image">
-                        <img id="product-main-image" src="{{ object.main_image_webp.url }}" alt="{{object}}" decoding="async"
-                             fetchpriority="high">
+                        <img
+                                id="product-main-image"
+                                src="{{ object.main_image_webp_md.url }}"
+                                srcset="
+    {{ object.main_image_webp_sm.url }} 360w,
+    {{ object.main_image_webp_md.url }} 768w,
+    {{ object.main_image_webp_lg.url }} 1024w
+  "
+                                sizes="(min-width: 767px) 50vw, 100vw"
+                                alt="{{ object.title }}"
+                                loading="lazy"
+                                decoding="async"
+                        >
                     </div>
 
                     <div class="product-detail__thumbnails">
                         <button
                                 type="button"
                                 class="product-detail__thumb is-active"
-                                data-image="{{ object.main_image_webp.url }}"
+                                data-image="{{ object.image_webp_sm.url }}"
                         >
                             <img
-                                    src="{{ object.main_image_webp.url }}"
+                                    src="{{ object.main_image_webp_sm.url }}"
+                                    width="96"
+                                    height="96"
                                     alt="{{ object.title }}"
                                     loading="lazy"
                                     decoding="async"
@@ -56,10 +69,21 @@
                         <button
                                 type="button"
                                 class="product-detail__thumb"
-                                data-image="{{ image.image.url }}"
+                                data-image="{{ image.image_webp_lg.url }}"
+                                data-image-sm="{{ image.image_webp_sm.url }}"
+                                data-image-md="{{ image.image_webp_md.url }}"
+                                data-image-lg="{{ image.image_webp_lg.url }}"
                         >
                             <img
-                                    src="{{ image.image.url }}"
+                                    src="{{ image.image_webp_sm.url }}"
+                                    srcset="
+        {{ image.image_webp_sm.url }} 360w,
+        {{ image.image_webp_md.url }} 768w,
+        {{ image.image_webp_lg.url }} 1000w
+      "
+                                    sizes="96px"
+                                    width="96"
+                                    height="96"
                                     alt="{{ object.title }}"
                                     loading="lazy"
                                     decoding="async"
@@ -106,7 +130,7 @@
                             <p class="products-details__sale products-details__sale--page">{{ object.sale_price }}₴</p>
                             {%endif%}
 
-                            <p class="products-details__price products-details__price--page {% if product.sale_price %}products-details__price--old{% endif %}">
+                            <p class="products-details__price products-details__price--page {% if object.sale_price %}products-details__price--old{% endif %}">
                                 {{ object.price }}₴</p>
                         </div>
 

@@ -56,11 +56,25 @@ class Product(models.Model):
         default="products/default.jpg",
     )
 
-    main_image_webp = ImageSpecField(
-        source='main_image',
-        processors=[ResizeToFit(1000, 1500)],
-        format='WEBP',
-        options={'quality': 80},
+    main_image_webp_sm = ImageSpecField(
+        source="main_image",
+        processors=[ResizeToFit(360, 800)],
+        format="WEBP",
+        options={"quality": 78},
+    )
+
+    main_image_webp_md = ImageSpecField(
+        source="main_image",
+        processors=[ResizeToFit(768, 1100)],
+        format="WEBP",
+        options={"quality": 78},
+    )
+
+    main_image_webp_lg = ImageSpecField(
+        source="main_image",
+        processors=[ResizeToFit(1024, 1400)],
+        format="WEBP",
+        options={"quality": 78},
     )
 
     colors = models.ManyToManyField(
@@ -97,11 +111,24 @@ class ProductImage(models.Model):
         related_name="images",
     )
     image = models.ImageField(upload_to="products/extra/")
-    image_webp = ImageSpecField(
-        source='image',
-        processors=[ResizeToFit(400, 600)],
-        format='WEBP',
-        options={'quality': 80},
+
+    image_webp_sm = ImageSpecField(
+        source="image",
+        processors=[ResizeToFit(360, 800)],
+        format="WEBP",
+        options={"quality": 78},
+    )
+    image_webp_md = ImageSpecField(
+        source="image",
+        processors=[ResizeToFit(768, 1100)],
+        format="WEBP",
+        options={"quality": 78},
+    )
+    image_webp_lg = ImageSpecField(
+        source="image",
+        processors=[ResizeToFit(1000, 1400)],
+        format="WEBP",
+        options={"quality": 78},
     )
 
     sort_order = models.PositiveIntegerField(default=0)

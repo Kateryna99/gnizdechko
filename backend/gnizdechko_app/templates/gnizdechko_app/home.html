@@ -33,9 +33,15 @@
                                             {% else %}
                                             loading="lazy"
                                             {% endif %}
-                                            width="400" height="800"
+                                            width="400" height="700"
                                             src="{{ product.main_image_webp.url }}"
                                             alt="{{ product.title }}"
+                                            sizes="(min-width: 767px) 350px"
+                                            srcset="
+                                                {{ product.main_image_webp_sm.url }} 480w,
+                                                {{ product.main_image_webp_md.url }} 767w,
+                                                {{ product.main_image_webp_lg.url }} 1024w
+                                            "
                                     >
                                 </div>
                             </a>
