@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 
 class Category(models.Model):
     name = models.CharField(max_length=120, unique=True)
@@ -8,6 +10,13 @@ class Category(models.Model):
     main_image = models.ImageField(
         upload_to="categories/",
         default="categories/default.jpg",
+    )
+
+    main_image_webp = ImageSpecField(
+        source='main_image',
+        processors=[ResizeToFit(1000, 1000)],
+        format='WEBP',
+        options={'quality': 80},
     )
 
     def __str__(self):
@@ -47,6 +56,13 @@ class Product(models.Model):
         default="products/default.jpg",
     )
 
+    main_image_webp = ImageSpecField(
+        source='main_image',
+        processors=[ResizeToFit(1000, 1500)],
+        format='WEBP',
+        options={'quality': 80},
+    )
+
     colors = models.ManyToManyField(
         Color,
         blank=True,
@@ -58,16 +74,16 @@ class Product(models.Model):
 
     def clean(self):
         super().clean()
-        if not self.pk:
-            return
-        if self.categories.count() == 0:
+
+        if self.sale_price is not None and self.sale_price >= self.price:
+            raise ValidationError({
+                "sale_price": "Sale price must be less than price."
+            })
+
+        if self.pk and self.categories.count() == 0:
             raise ValidationError({
                 "categories": "Товар повинен мати хоча б одну категорію."
             })
-
-    def clean(self):
-        if self.sale_price is not None and self.sale_price >= self.price:
-            raise ValidationError({"sale_price": "Sale price must be less than price."})
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -81,6 +97,13 @@ class ProductImage(models.Model):
         related_name="images",
     )
     image = models.ImageField(upload_to="products/extra/")
+    image_webp = ImageSpecField(
+        source='image',
+        processors=[ResizeToFit(1000, 1500)],
+        format='WEBP',
+        options={'quality': 80},
+    )
+
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:

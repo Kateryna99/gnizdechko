@@ -6,10 +6,10 @@
   &__wrapper {
     position: relative;
 
-    padding: 0 0 1.5rem;
+    padding: 2rem 0 1.5rem;
 
     @include onTabletAndUp {
-      padding: 0 0 2rem;
+      padding: 3rem 0 2rem;
     }
   }
 }
@@ -54,26 +54,16 @@
     flex-direction: column;
     gap: 1.5rem;
 
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-
     @include onLaptopAndUp {
       padding: 2rem 0 4rem;
-
-      border: none;
     }
   }
 
   &__title {
-    padding-left: 1rem;
     @include titleMain;
 
     @include onTabletAndUp {
-      padding-left: 2rem;
     }
-  }
-
-  @include onLaptopAndUp {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -83,8 +73,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 1rem;
-
-    padding: 0 1rem;
 
     @include onTabletAndUp {
       grid-template-columns: repeat(auto-fill, minmax(180px, 250px));
@@ -148,7 +136,6 @@
 
     @include hover-supported {
       &:hover {
-        transform: translateY(-2px);
         border-color: rgba($colorTextPrimary, 0.22);
         box-shadow: 0 14px 38px rgba(0, 0, 0, 0.10);
 
@@ -170,6 +157,8 @@
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
 
     @include onLaptopAndUp {
       padding: 4rem 0 6rem;
@@ -231,7 +220,7 @@
   &__wrapper {
     padding: 2rem 0;
 
-    border-top: 2px dotted $colorAccent;
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
 
     overflow: hidden;
 
@@ -244,7 +233,7 @@
     }
 
     @include onLaptopAndUp {
-      padding: 2rem 2rem 5rem;
+      padding: 2rem 0 5rem;
     }
   }
 

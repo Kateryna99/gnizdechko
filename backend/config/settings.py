@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "gnizdechko_app.apps.GnizdechkoAppConfig",
     'cart',
     'orders',
+    'imagekit',
 ]
 
 MIDDLEWARE = [

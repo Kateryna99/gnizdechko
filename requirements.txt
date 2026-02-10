@@ -8,4 +8,5 @@ python-dotenv
 requests
 psycopg2-binary
 dj-database-url
+django-imagekit
 Babel

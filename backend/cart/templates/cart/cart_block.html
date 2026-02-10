@@ -11,7 +11,7 @@
         <div class="cart-product">
             <a href="{% url 'product-detail' product.product_id %}" class="cart-product__link">
                 <div class="cart-product__image">
-                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                    <img loading="lazy" src="{{ product.image }}" alt="{{ product.title }}">
                 </div>
 
                 <div class="cart-product__block">

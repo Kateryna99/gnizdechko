@@ -34,7 +34,7 @@
             <div class="product-detail__block">
                 <div class="product-detail__images">
                     <div class="product-detail__main-image">
-                        <img id="product-main-image" src="{{ object.main_image.url }}" alt="{{object}}" decoding="async"
+                        <img id="product-main-image" src="{{ object.main_image_webp.url }}" alt="{{object}}" decoding="async"
                              fetchpriority="high">
                     </div>
 
@@ -42,10 +42,10 @@
                         <button
                                 type="button"
                                 class="product-detail__thumb is-active"
-                                data-image="{{ object.main_image.url }}"
+                                data-image="{{ object.main_image_webp.url }}"
                         >
                             <img
-                                    src="{{ object.main_image.url }}"
+                                    src="{{ object.main_image_webp.url }}"
                                     alt="{{ object.title }}"
                                     loading="lazy"
                                     decoding="async"

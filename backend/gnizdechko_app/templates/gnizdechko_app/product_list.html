@@ -59,7 +59,7 @@
                                 data-title="{{ product.title|escape }}"
                         >
                             <a href="{% url 'product-detail' product.id%}?cat={{ category.slug }}" class="products-list__image">
-                                <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+                                <img src="{{ product.main_image_webp.url }}" alt="{{ product.title }}">
                             </a>
 
                             <h4 class="products-list__title">

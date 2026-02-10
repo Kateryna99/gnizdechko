@@ -55,7 +55,7 @@ def cart_add(request):
             "color_hex": color.hex if color else None,
             "qty": qty,
             "price": int(price),
-            "image": product.main_image.url,
+            "image": product.main_image_webp.url,
         }
 
     request.session["cart"] = cart

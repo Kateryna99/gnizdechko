@@ -13,8 +13,14 @@
   visibility: hidden;
 }
 
-.swiper {
-  min-height: 1px;
+::selection {
+  background: $colorPrimary;
+  color: #f8f6f1;
+}
+
+::-moz-selection {
+  background: #8C2F2F;
+  color: #f8f6f1;
 }
 
 *,
@@ -137,11 +143,15 @@ button {
 }
 
 .container {
-  max-width: 2000px;
+  max-width: 1440px;
   width: 100%;
 
   margin: 0 auto;
   padding: 0 1rem;
+
+  @include onTabletAndUp {
+    padding: 0 2rem;
+  }
 }
 
 .logo {
