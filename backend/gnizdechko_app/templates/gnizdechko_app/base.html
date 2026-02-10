@@ -109,15 +109,19 @@
                         {% include "cart/cart_block.html" %}
                     </div>
 
-                    <div class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-                        <div class="burger__wrapper">
-                            <div class="burger__item"></div>
-
-                            <div class="burger__item"></div>
-
-                            <div class="burger__item"></div>
-                        </div>
-                    </div>
+                    <button
+                            class="burger"
+                            type="button"
+                            aria-label="Відкрити меню"
+                            aria-controls="mobileMenu"
+                            aria-expanded="false"
+                    >
+                      <span class="burger__wrapper" aria-hidden="true">
+                        <span class="burger__item"></span>
+                        <span class="burger__item"></span>
+                        <span class="burger__item"></span>
+                      </span>
+                    </button>
                 </div>
             </div>
         </div>
