@@ -53,7 +53,9 @@
                         <button
                                 type="button"
                                 class="product-detail__thumb is-active"
-                                data-image="{{ object.image_webp_sm.url }}"
+                                data-image-sm="{{ object.main_image_webp_sm.url }}"
+                                data-image-md="{{ object.main_image_webp_md.url }}"
+                                data-image-lg="{{ object.main_image_webp_lg.url }}"
                         >
                             <img
                                     src="{{ object.main_image_webp_sm.url }}"
