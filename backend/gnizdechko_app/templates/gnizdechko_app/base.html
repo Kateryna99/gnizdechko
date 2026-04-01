@@ -1,5 +1,5 @@
 {% load static %}
-{% load vite_tags %}
+<!--{% load vite_tags %}-->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -195,9 +195,13 @@
 
 {% if DEBUG %}
 <script type="module" src="http://localhost:5173/src/js/index.js"></script>
-{% else %}
-<script type="module" src="{% vite_js 'src/js/index.js' %}"></script>
 {% endif %}
+
+<!--{% if DEBUG %}-->
+<!--<script type="module" src="http://localhost:5173/src/js/index.js"></script>-->
+<!--{% else %}-->
+<!--<script type="module" src="{% vite_js 'src/js/index.js' %}"></script>-->
+<!--{% endif %}-->
 
 <div class="snackbar" id="snackbar" aria-live="polite" aria-atomic="true">
     <span class="snackbar__text" id="snackbarText"></span>
