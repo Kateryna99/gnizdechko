@@ -5,7 +5,7 @@ export default defineConfig(({ command }) => ({
   build: {
     outDir: '../backend/static/dist',
     emptyOutDir: true,
-    manifest: true,
+    manifest: "manifest.json",
     rollupOptions: {
       input: "./src/js/index.js",
     },
