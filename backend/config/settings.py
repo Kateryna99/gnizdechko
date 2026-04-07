@@ -81,6 +81,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://gnizdechko-app-123-ckcua5axe5hbbxh2.westeurope-01.azurewebsites.net",
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
