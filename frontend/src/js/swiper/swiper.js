@@ -1,9 +1,5 @@
 import Swiper, {Navigation, Pagination, Autoplay} from 'swiper'
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-
 Swiper.use([Navigation, Pagination, Autoplay])
 
 const aboutSwiper = document.querySelector('.swiper-about')

@@ -8,6 +8,10 @@
 @use 'components/delivery-and-payment';
 @use 'components/checkout';
 
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
+
 .swiper:not(.swiper-initialized) {
   opacity: 0;
   visibility: hidden;
