@@ -10,3 +10,5 @@ psycopg2-binary
 dj-database-url
 django-imagekit
 Babel
+django-storages
+azure-storage-blob
